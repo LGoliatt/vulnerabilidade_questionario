@@ -69,8 +69,8 @@ if st.button("Salvar respostas"):
 
 #==============================================
 
-st.set_page_config(page_title="AHP - Consistência", layout="centered")
-st.title("🎯 Consistência na Análise AHP")
+#st.set_page_config(page_title="AHP - Consistência", layout="centered")
+#st.title("🎯 Consistência na Análise AHP")
 st.markdown("Preencha a tabela comparando os critérios **do ponto de vista da linha em relação à coluna**.")
 
 st.markdown("""
