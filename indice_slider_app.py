@@ -8,11 +8,9 @@ st.markdown("Preencha a tabela comparando os critérios **do ponto de vista da l
 
 st.markdown("""
 **Escala de importância:**
-- 1 = Igual importância  
-- 3 = Moderada importância  
-- 5 = Forte importância  
-- 7 = Muito forte importância  
-- 9 = Extrema importância  
+- Valores **positivos** → Linha é mais importante  
+- Valores **negativos** → Coluna é mais importante  
+- Valor absoluto indica o grau de importância (1 = igual, 9 = extrema)  
 """)
 
 # Critérios a serem comparados
@@ -29,16 +27,21 @@ for i in range(n):
         key = f"{criterios[i]} vs {criterios[j]}"
         valor = st.slider(
             f"Quanto mais importante é '{criterios[i]}' comparado a '{criterios[j]}'?",
-            min_value=1,
+            min_value=-9,
             max_value=9,
-            value=5,
+            value=0,
             step=1,
             key=key,
-            help="1 = igual importância, 9 = importância extrema de um sobre o outro"
+            help="Valores positivos: critério da linha mais importante. Negativos: critério da coluna mais importante. Zero não é permitido."
         )
-        entrada_usuario[key] = valor
-        matriz[i, j] = valor
-        matriz[j, i] = round(1 / valor, 3)
+
+        # Impedir seleção de zero
+        if valor == 0:
+            st.warning("O valor 0 não é permitido em AHP. Selecione de -9 a -1 ou 1 a 9.")
+        else:
+            entrada_usuario[key] = valor
+            matriz[i, j] = abs(valor) if valor > 0 else round(1 / abs(valor), 3)
+            matriz[j, i] = round(1 / matriz[i, j], 3)
 
 # Exibir a matriz preenchida
 st.markdown("### 🧮 Matriz de Comparação")
@@ -63,7 +66,7 @@ st.markdown("### ✅ Índice de Consistência (CI)")
 lambda_max = np.dot(col_sum, pesos)
 CI = (lambda_max - n) / (n - 1)
 
-# RI (Índice Aleatório) para diferentes tamanhos de matriz (até n = 10)
+# RI (Índice Aleatório)
 RI_dict = {1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
            6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
 RI = RI_dict[n]
@@ -87,4 +90,3 @@ if st.button("📥 Exportar como CSV"):
         file_name="pesos_ahp.csv",
         mime="text/csv"
     )
-
