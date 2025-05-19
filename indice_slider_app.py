@@ -94,11 +94,14 @@ entrada_usuario = {}
 for i in range(n):
     for j in range(i + 1, n):
         key = f"{criterios[i]} vs {criterios[j]}"
-        valor = st.selectbox(
+        valor = st.slider(
             f"Quanto mais importante é '{criterios[i]}' comparado a '{criterios[j]}'?",
-            options=[1, 2, 3, 4, 5, 6, 7, 8, 9],
-            index=4,
-            key=key
+            min_value=1,
+            max_value=9,
+            value=5,
+            step=1,
+            key=key,
+            help="1 = igual importância, 9 = importância extrema de um sobre o outro"
         )
         entrada_usuario[key] = valor
         matriz[i, j] = valor
