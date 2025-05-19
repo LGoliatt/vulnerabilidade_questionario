@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-
+'''
 st.set_page_config(page_title="Comparação de Critérios - AHP", layout="centered")
 
 st.title("Análise de Comparação Par a Par")
@@ -64,7 +64,7 @@ if st.button("Salvar respostas"):
     }
     st.success("Respostas salvas com sucesso!")
     st.json(respostas)
-
+'''
 
 
 #==============================================
