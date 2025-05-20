@@ -8,6 +8,8 @@ st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e
 
 # Critérios
 criterios = ["Knowledge", "Communication", "Experience"]
+criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo',]
+
 n = len(criterios)
 
 # Tabs
