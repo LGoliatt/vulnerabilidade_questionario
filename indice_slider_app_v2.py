@@ -16,7 +16,7 @@ st.markdown("""
 """)
 
 # Critérios a serem comparados
-criterios = ["Knowledge", "Communication", "Experience"]
+criterios = ["Knowledge", "Communication Skill", "Experience"]
 n = len(criterios)
 
 # Inicializa a matriz
@@ -27,36 +27,26 @@ entrada_usuario = {}
 for i in range(n):
     for j in range(i + 1, n):
         key = f"{criterios[i]} vs {criterios[j]}"
+        options = [i for i in range(-9, 10) if i != 0]  # valores de -9 a +9, excluindo 0
 
-        # Valores e rótulos para o slider: 1/9 a 9, exceto 0
-        slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
-                         '2', '3', '4', '5', '6', '7', '8', '9']
-        slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1,
-                         2, 3, 4, 5, 6, 7, 8, 9]
-
-        col1, col2, col3 = st.columns([2.0, 6, 2.0])
+        col1, col2, col3 = st.columns([1, 6, 1])
         with col1:
             st.markdown(f"**⬅️ {criterios[i]}**")
         with col2:
-            idx = slider_labels.index('1')  # posição inicial do slider
-            selected_label = st.select_slider(
+            valor = st.radio(
                 f"Comparação entre '{criterios[i]}' e '{criterios[j]}'",
-                options=slider_labels,
-                value=slider_labels[idx],
+                options=options,
+                index=options.index(1),
+                horizontal=True,
                 key=key,
-                help="Valores maiores: mais importância para o critério da esquerda. Frações: mais importância para o critério da direita."
+                help="Valores positivos: critério à esquerda é mais importante. Negativos: critério à direita é mais importante."
             )
         with col3:
             st.markdown(f"**{criterios[j]} ➡️**")
 
-        # Converte rótulo selecionado para valor numérico
-        valor = slider_values[slider_labels.index(selected_label)]
-
         entrada_usuario[key] = valor
-        matriz[i, j] = valor
-        matriz[j, i] = round(1 / valor, 3)
-
-
+        matriz[i, j] = abs(valor) if valor > 0 else round(1 / abs(valor), 3)
+        matriz[j, i] = round(1 / matriz[i, j], 3)
 
 # Exibir a matriz preenchida
 st.markdown("### 🧮 Matriz de Comparação")
@@ -87,17 +77,9 @@ RI_dict = {1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
 RI = RI_dict[n]
 CR = CI / RI if RI != 0 else 0
 
-
-st.markdown("### 📈 Métricas de Consistência")
-# st.write(f"λ_max: {lambda_max:.3f}")
-# st.write(f"Índice de Consistência (CI): {CI:.3f}")
-# st.write(f"Razão de Consistência (CR): {CR:.3f}")
-
-col1, col2, col3 = st.columns(3)
-col1.metric("λ_max", f"{lambda_max:.3f}")
-col2.metric("CI (Índice de Consistência)", f"{CI:.3f}")
-col3.metric("CR (Razão de Consistência)", f"{CR:.3f}", delta="OK ✅" if CR < 0.1 else "Ruim ❌")
-
+st.write(f"λ_max: {lambda_max:.3f}")
+st.write(f"Índice de Consistência (CI): {CI:.3f}")
+st.write(f"Razão de Consistência (CR): {CR:.3f}")
 
 if CR < 0.1:
     st.success("A matriz de comparação é consistente! ✅")
