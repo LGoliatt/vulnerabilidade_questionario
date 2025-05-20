@@ -88,6 +88,7 @@ RI = RI_dict[n]
 CR = CI / RI if RI != 0 else 0
 
 
+
 st.markdown("### 📈 Métricas de Consistência")
 # st.write(f"λ_max: {lambda_max:.3f}")
 # st.write(f"Índice de Consistência (CI): {CI:.3f}")
