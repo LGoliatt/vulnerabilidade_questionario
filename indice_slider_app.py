@@ -34,7 +34,7 @@ with tab1:
     entrada_usuario = {}
 
     slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
-                     '2', '3', '4', '5', '6', '7', '8', '9']
+                     '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']
     slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     for i in range(n):
@@ -58,7 +58,7 @@ with tab1:
             valor = slider_values[slider_labels.index(selected_label)]
             entrada_usuario[key] = valor
             matriz[i, j] = valor
-            matriz[j, i] = round(1 / valor, 3)
+            matriz[j, i] = round(1./ valor, 3)
 
     st.markdown("### 🧮 Matriz de Comparação")
     df_matriz = pd.DataFrame(matriz, index=criterios, columns=criterios)
@@ -107,6 +107,15 @@ with tab1:
 with tab2:
     st.header("🧠 Método FAHP (Fuzzy AHP)")
     st.markdown("Compare os critérios levando em conta a incerteza das avaliações.")
+
+    st.markdown("""
+    **Escala de importância:**
+    - 1 = Igual importância  
+    - 3 = Moderada importância  
+    - 5 = Forte importância  
+    - 7 = Muito forte importância  
+    - 9 = Extrema importância  
+    """)
 
     fuzzy_scale = {
         1: (1, 1, 1),
