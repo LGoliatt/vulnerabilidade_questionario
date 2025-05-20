@@ -86,7 +86,7 @@ with tab1:
     CR = CI / RI if RI != 0 else 0
 
     col1, col2, col3 = st.columns(3)
-    col1.metric("λ_max", f"{lambda_max:.3f}")
+    col1.metric("λ_max", f"{lambda_max:.3f}") 
     col2.metric("CI (Índice de Consistência)", f"{CI:.3f}")
     col3.metric("CR (Razão de Consistência)", f"{CR:.3f}", delta="OK ✅" if CR < 0.1 else "Ruim ❌")
 
