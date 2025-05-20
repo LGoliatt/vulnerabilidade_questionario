@@ -61,7 +61,7 @@ with tab1:
             valor = slider_values[slider_labels.index(selected_label)]
             entrada_usuario[key] = valor
             matriz[i, j] = valor
-            matriz[j, i] = round(1./ valor, 3)
+            matriz[j, i] = round(1 / valor, 3)
 
     st.markdown("### 🧮 Matriz de Comparação")
     df_matriz = pd.DataFrame(matriz, index=criterios, columns=criterios)
