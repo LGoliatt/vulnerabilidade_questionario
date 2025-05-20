@@ -61,3 +61,29 @@ if st.button("Salvar respostas"):
     }
     st.success("Respostas salvas com sucesso!")
     st.json(respostas)
+
+
+
+custom_css = """
+        <style>
+        [data-testid="stTickBarMin"],
+        [data-testid="stTickBarMax"] {
+            font-size: 0px;
+        }
+        </style>
+        """
+
+# Inject custom CSS with st.markdown()
+st.markdown(custom_css, unsafe_allow_html=True)
+color = st.select_slider(
+    "Select a color of the rainbow",
+    options=[
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "indigo",
+        "violet",
+    ],
+)
