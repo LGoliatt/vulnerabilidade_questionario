@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+ 
 st.set_page_config(page_title="AHP - Consistência", layout="centered")
 st.title("🎯 Consistência na Análise AHP")
 st.markdown("Preencha a tabela comparando os critérios **do ponto de vista da linha em relação à coluna**.")
@@ -36,6 +36,9 @@ for i in range(n):
             key=key,
             help="1 = igual importância, 9 = importância extrema de um sobre o outro"
         )
+        entrada_usuario[key] = valor
+        matriz[i, j] = valor
+        matriz[j, i] = round(1 / valor, 3)
 
 # Exibir a matriz preenchida
 st.markdown("### 🧮 Matriz de Comparação")
