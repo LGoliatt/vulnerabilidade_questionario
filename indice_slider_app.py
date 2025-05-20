@@ -12,6 +12,11 @@ criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do sol
 
 n = len(criterios)
 
+slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
+             '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']
+slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
 # Tabs
 tab1, tab2 = st.tabs(["📐 AHP", "🧠 FAHP (Fuzzy AHP)"])
 
@@ -33,9 +38,7 @@ with tab1:
     matriz = np.ones((n, n))
     entrada_usuario = {}
 
-    slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
-                     '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']
-    slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 
     for i in range(n):
         for j in range(i + 1, n):
@@ -131,9 +134,7 @@ with tab2:
     fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in fuzzy_scale.items()}
     matriz_fuzzy = np.zeros((n, n, 3))
     # Valores para slider (esquerda maior até 1, depois direita maior)
-    slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
-                     '2', '3', '4', '5', '6', '7', '8', '9']
-    slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 
     
 
