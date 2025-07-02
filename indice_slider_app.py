@@ -161,7 +161,7 @@ with tab1:
             label="Download CSV",
             data=df_export.to_csv().encode("utf-8"),
             file_name="pesos_fahp.csv",
-            mime="text/csv"
+            mime="text/csv" 
         )
 
 # ---------------------------
