@@ -112,6 +112,8 @@ st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
 col_sum_def = np.sum(matriz_fuzzy[:, :, 1], axis=0)  # valor médio (m)
 lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
+RI_dict = {1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
+               6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
 RI_fuzzy = RI_dict[n]
 CR_fuzzy = CI_fuzzy / RI_fuzzy if RI_fuzzy != 0 else 0
 
