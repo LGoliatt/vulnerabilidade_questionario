@@ -102,7 +102,7 @@ pesos_normalizados = pesos_defuzzificados / np.sum(pesos_defuzzificados)
 st.markdown("### 📊 Pesos Relativos dos Critérios")
 df_pesos_fahp = pd.DataFrame({
     "Critério": criterios,
-    "Peso Fuzzy": [f"{tuple(float(np.round(x*1.0, 3)))}" for x in soma_linhas],
+    "Peso Fuzzy": [tuple(np.round(x*1.0, 3)) for x in soma_linhas],
     "Peso Final": np.round(pesos_normalizados, 4)
 })
 st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
