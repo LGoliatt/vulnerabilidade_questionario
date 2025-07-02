@@ -30,7 +30,6 @@ que serão submetidos à especialistas para realização de comparações
 st.image('5_fatores.png')
 
 # Critérios
-criterios = ["Knowledge", "Communication", "Experience"]
 criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo',]
 
 n = len(criterios)
