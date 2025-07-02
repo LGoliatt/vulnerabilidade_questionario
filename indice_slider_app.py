@@ -12,7 +12,7 @@ st.set_page_config(page_title="Índice de vulnerabilidade hídrica natural em ba
 st.title("📊 Índice de vulnerabilidade hídrica natural em bacias hidrográficas")
 st.markdown(
 '''
-O presente estudo utiliza a metodologia **AHP** para desenvolver um **índice 
+O presente estudo utiliza a metodologia **Fuzzy AHP** para desenvolver um **índice 
 de vulnerabilidade hídrica natural em bacias hidrográficas**. 
 A técnica permite hierarquizar e ponderar critérios com maior precisão, 
 considerando incertezas inerentes ao processo decisório. 
