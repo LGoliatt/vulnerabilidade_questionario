@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 
 
-st.set_page_config(page_title="AHP e FAHP", layout="centered")
-st.title("📊 AHP vs FAHP")
+#st.set_page_config(page_title="AHP e FAHP", layout="centered")
+#st.title("📊 AHP vs FAHP")
 #st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
 
 
