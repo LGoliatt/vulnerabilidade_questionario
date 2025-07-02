@@ -68,8 +68,10 @@ fuzzy_scale = {
 }
 fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in fuzzy_scale.items()}
 matriz_fuzzy = np.zeros((n, n, 3))
-# Valores para slider (esquerda maior até 1, depois direita maior)
 
+
+
+# Valores para slider (esquerda maior até 1, depois direita maior)
 for i in range(n):
     for j in range(i + 1, n):
         key = f"FAHP: {criterios[i]} vs {criterios[j]}"
