@@ -3,40 +3,6 @@ import pandas as pd
 import numpy as np
 import pylab as plt
 
-def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership Functions", figsize=(10, 6)):
-    """
-    Plots triangular fuzzy membership functions.
-
-    Parameters:
-        fuzzy_scale (dict): Dictionary of fuzzy sets with (a, b, c) triangle parameters.
-        x_range (tuple): Range of x values to plot (start, end).
-        title (str): Title of the plot.
-        figsize (tuple): Size of the figure (width, height).
-    """
-    def triangular(x, a, b, c):
-        return np.where(x <= a, 0,
-                        np.where(x <= b, (x - a) / (b - a),
-                                 np.where(x <= c, (c - x) / (c - b), 0)))
-
-    x = np.linspace(*x_range, 500)
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    for label, (a, b, c) in fuzzy_scale.items():
-        y = triangular(x, a, b, c)
-        ax.plot(x, y, label=f"Level {label}")
-        ax.fill_between(x, y, alpha=0.1)
-
-    ax.set_title(title)
-    ax.set_xlabel("Input Value")
-    ax.set_ylabel("Membership Degree")
-    ax.legend(loc='upper right', bbox_to_anchor=(1.2, 1))
-    ax.grid(True)
-    plt.tight_layout()
-
-    return fig, ax
-
-
 #st.set_page_config(page_title="AHP e FAHP", layout="centered")
 #st.title("📊 AHP vs FAHP")
 #st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
@@ -84,6 +50,39 @@ st.markdown("""
 - 7 = Muito forte importância  
 - 9 = Extrema importância  
 """)
+
+def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership Functions", figsize=(10, 6)):
+    """
+    Plots triangular fuzzy membership functions.
+
+    Parameters:
+        fuzzy_scale (dict): Dictionary of fuzzy sets with (a, b, c) triangle parameters.
+        x_range (tuple): Range of x values to plot (start, end).
+        title (str): Title of the plot.
+        figsize (tuple): Size of the figure (width, height).
+    """
+    def triangular(x, a, b, c):
+        return np.where(x <= a, 0,
+                        np.where(x <= b, (x - a) / (b - a),
+                                 np.where(x <= c, (c - x) / (c - b), 0)))
+
+    x = np.linspace(*x_range, 500)
+
+    fig, ax = plt.subplots(figsize=figsize)
+
+    for label, (a, b, c) in fuzzy_scale.items():
+        y = triangular(x, a, b, c)
+        ax.plot(x, y, label=f"Level {label}")
+        ax.fill_between(x, y, alpha=0.1)
+
+    ax.set_title(title)
+    ax.set_xlabel("Input Value")
+    ax.set_ylabel("Membership Degree")
+    ax.legend(loc='upper right', bbox_to_anchor=(1.2, 1))
+    ax.grid(True)
+    plt.tight_layout()
+
+    return fig, ax
 
 slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
                 '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']  
