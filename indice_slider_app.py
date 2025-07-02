@@ -2,9 +2,35 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+
 st.set_page_config(page_title="AHP e FAHP", layout="centered")
 st.title("📊 AHP vs FAHP")
-st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
+#st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
+
+
+st.set_page_config(page_title="Índice de vulnerabilidade hídrica natural em bacias hidrográficas", layout="centered")
+st.title("📊 Índice de vulnerabilidade hídrica natural em bacias hidrográficas")
+st.markdown(
+'''
+O presente estudo utiliza a metodologia **AHP** para desenvolver um **índice 
+de vulnerabilidade hídrica natural em bacias hidrográficas**. 
+A técnica permite hierarquizar e ponderar critérios com maior precisão, 
+considerando incertezas inerentes ao processo decisório. 
+Os **pesos obtidos** são aplicados em geoprocessamento, 
+viabilizando análises espaciais mais robustas e apoiando a gestão ambiental integrada.
+'''
+)
+st.markdown(
+'''
+Nesse contexto, foram elencados cinco fatores, a saber: 
+**precipitação, elevação, declividade, uso e cobertura do solo e textura do solo**, 
+que serão submetidos à especialistas para realização de comparações
+ pareadas através de uma escala de importância.
+'''
+)
+
+st.image('5_fatores.png')
+
 
 # Critérios
 criterios = ["Knowledge", "Communication", "Experience"]
