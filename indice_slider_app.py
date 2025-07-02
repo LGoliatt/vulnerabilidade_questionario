@@ -1,40 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-
-def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership Functions", figsize=(10, 6)):
-    """
-    Plots triangular fuzzy membership functions.
-
-    Parameters:
-        fuzzy_scale (dict): Dictionary of fuzzy sets with (a, b, c) triangle parameters.
-        x_range (tuple): Range of x values to plot (start, end).
-        title (str): Title of the plot.
-        figsize (tuple): Size of the figure (width, height).
-    """
-    def triangular(x, a, b, c):
-        return np.where(x <= a, 0,
-                        np.where(x <= b, (x - a) / (b - a),
-                                 np.where(x <= c, (c - x) / (c - b), 0)))
-
-    x = np.linspace(*x_range, 500)
-
-    fig, ax = plt.subplots(figsize=figsize)
-
-    for label, (a, b, c) in fuzzy_scale.items():
-        y = triangular(x, a, b, c)
-        ax.plot(x, y, label=f"Level {label}")
-        ax.fill_between(x, y, alpha=0.1)
-
-    ax.set_title(title)
-    ax.set_xlabel("Input Value")
-    ax.set_ylabel("Membership Degree")
-    ax.legend(loc='upper right', bbox_to_anchor=(1.2, 1))
-    ax.grid(True)
-    plt.tight_layout()
-
-    return fig, ax
+from matplotlib.figure import Figure
 
 
 #st.set_page_config(page_title="AHP e FAHP", layout="centered")
@@ -104,9 +71,6 @@ fuzzy_scale = {
 fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in fuzzy_scale.items()}
 matriz_fuzzy = np.zeros((n, n, 3))
 # Valores para slider (esquerda maior até 1, depois direita maior)
-
-fig, ax = plot_fuzzy_membership(fuzzy_scale)
-st.pyplot(fig)
 
 
 for i in range(n):
