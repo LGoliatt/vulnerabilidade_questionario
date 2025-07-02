@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import marplotlib 
 
 #st.set_page_config(page_title="AHP e FAHP", layout="centered")
 #st.title("📊 AHP vs FAHP")
