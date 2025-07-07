@@ -157,10 +157,15 @@ for i in range(n):
             matriz_fuzzy[i, j, 2] / sum_cols[j, 0]
         )
 
+matriz_media_ = norm_fuzzy[:, :, 1]
+df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
+st.dataframe(df_matriz_fuzzy_, height=250)
+st.dataframe(df_matriz_fuzzy_.sum(axis=0).T)
+
+
 soma_linhas = np.sum(norm_fuzzy, axis=1)
 pesos_defuzzificados = [(l + 2*m + u) / 4. for l, m, u in soma_linhas]
 pesos_normalizados = pesos_defuzzificados / np.sum(pesos_defuzzificados)
-st.dataframe(pesos_normalizados)
 
 # === PESOS RELATIVOS ===
 st.markdown("### 📊 Pesos Relativos dos Critérios")
