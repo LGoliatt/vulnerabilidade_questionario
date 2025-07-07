@@ -161,7 +161,7 @@ st.markdown("### 🧮 Matriz de Comparação Normalizada")
 matriz_media_ = norm_fuzzy[:, :, 1]
 df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy_, height=250)
-st.dataframe(np.mean(df_matriz_fuzzy_, axis=0), height=250)
+st.dataframe(np.mean(df_matriz_fuzzy_, axis=1), height=250)
 
 
 soma_linhas = np.sum(norm_fuzzy, axis=1)
