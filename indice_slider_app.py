@@ -140,7 +140,8 @@ for i in range(n):
 
 # === MATRIZ DE COMPARAÇÃO ===
 st.markdown("### 🧮 Matriz de Comparação (valores médios dos TFNs)")
-matriz_media = np.round(matriz_fuzzy[:, :, 1], 3)
+#matriz_media = np.round(matriz_fuzzy[:, :, 1], 3)
+matriz_media = matriz_fuzzy[:, :, 1]
 df_matriz_fuzzy = pd.DataFrame(matriz_media, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy, height=250)
 
@@ -156,15 +157,15 @@ for i in range(n):
         )
 
 soma_linhas = np.sum(norm_fuzzy, axis=1)
-pesos_defuzzificados = [(l + 2*m + u) / 4 for l, m, u in soma_linhas]
+pesos_defuzzificados = [(l + 2*m + u) / 4. for l, m, u in soma_linhas]
 pesos_normalizados = pesos_defuzzificados / np.sum(pesos_defuzzificados)
 
 # === PESOS RELATIVOS ===
 st.markdown("### 📊 Pesos Relativos dos Critérios")
 df_pesos_fahp = pd.DataFrame({
     "Critério": criterios,
-    "Peso Fuzzy": [tuple(np.round(x*1.0, 3)) for x in soma_linhas],
-    "Peso Final": np.round(pesos_normalizados, 4)
+    "Peso Fuzzy": [tuple(np.round(x*1.0, 6)) for x in soma_linhas],
+    "Peso Final": np.round(pesos_normalizados, 6)
 })
 st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
