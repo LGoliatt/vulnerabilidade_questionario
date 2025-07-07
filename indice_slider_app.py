@@ -161,13 +161,17 @@ st.markdown("### 🧮 Matriz de Comparação Normalizada")
 matriz_media_ = norm_fuzzy[:, :, 1]
 df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy_, height=250)
-st.dataframe(df_matriz_fuzzy_.mean(axis=1), height=250)
+
 
 
 soma_linhas = np.sum(norm_fuzzy, axis=1)
 pesos_defuzzificados = [(l + 2*m + u) / 4 for l, m, u in soma_linhas]
 #pesos_defuzzificados = [(l + 1*m + u) / 3 for l, m, u in soma_linhas]
 pesos_normalizados = pesos_defuzzificados / np.sum(pesos_defuzzificados)
+
+media_linhas = df_matriz_fuzzy_.mean(axis=1)#--
+st.dataframe(media_linhas, height=250) #--
+pesos_normalizados = media_linhas
 
 # === PESOS RELATIVOS ===
 st.markdown("### 📊 Pesos Relativos dos Critérios")
