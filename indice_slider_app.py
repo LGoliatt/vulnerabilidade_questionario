@@ -144,7 +144,7 @@ st.markdown("### 🧮 Matriz de Comparação (valores médios dos TFNs)")
 matriz_media = matriz_fuzzy[:, :, 1]
 df_matriz_fuzzy = pd.DataFrame(matriz_media, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy, height=250)
-st.dataframe(df_matriz_fuzzy.sum(axis=0), height=250)
+st.dataframe(df_matriz_fuzzy.sum(axis=0).T)
 
 # === CÁLCULO DE PESOS FUZZY ===
 sum_cols = np.sum(matriz_fuzzy, axis=0)
