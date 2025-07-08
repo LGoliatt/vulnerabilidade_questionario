@@ -182,14 +182,14 @@ importancia_labels = [
     "3 - Moderada importância (à esquerda)",
     "2",
     "1 - Igual importância",
-    "2⁻¹",
-    "3⁻¹ - Moderada importância (à direita)",
-    "4⁻¹",
-    "5⁻¹ - Forte importância (à direita)",
-    "6⁻¹",
-    "7⁻¹ - Muito forte importância (à direita)",
-    "8⁻¹",
-    "9⁻¹ - Extrema importância (à direita)"
+    "1/2",
+    "1/3 - Moderada importância (à direita)",
+    "1/4",
+    "1/5 - Forte importância (à direita)",
+    "1/6",
+    "1/7 - Muito forte importância (à direita)",
+    "1/8",
+    "1/9 - Extrema importância (à direita)"
 ]
 
 
