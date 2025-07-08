@@ -212,8 +212,8 @@ fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in f
 matriz_fuzzy = np.zeros((n, n, 3))
 # Valores para slider (esquerda maior até 1, depois direita maior)
 
-fig = plot_fuzzy_membership_plotly(fuzzy_scale)
-st.plotly_chart(fig, use_container_width=True)
+#fig = plot_fuzzy_membership_plotly(fuzzy_scale)
+#st.plotly_chart(fig, use_container_width=True)
 
 
 for i in range(n):
@@ -253,7 +253,7 @@ for i in range(n):
 st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
 matriz_media = matriz_fuzzy[:, :, 1]  # Usa o valor médio 'm' de cada TFN
 df_matriz_fuzzy = pd.DataFrame(matriz_media, index=criterios, columns=criterios)
-st.dataframe(df_matriz_fuzzy, height=250)
+#st.dataframe(df_matriz_fuzzy, height=250)
 
 # === NORMALIZAÇÃO DA MATRIZ CRISP ===
 matriz_crisp = matriz_fuzzy[:, :, 1]  # Extrai apenas o valor médio (m) de cada TFN
@@ -263,7 +263,7 @@ matriz_norm_crisp = matriz_crisp / sum_cols_crisp  # Normaliza por coluna
 # Exibe a matriz normalizada
 st.markdown("### 📐 Matriz Normalizada (valores crisp)")
 df_norm_crisp = pd.DataFrame(matriz_norm_crisp, index=criterios, columns=criterios)
-st.dataframe(df_norm_crisp, height=250)
+#st.dataframe(df_norm_crisp, height=250)
 
 # === CÁLCULO DOS PESOS FINAIS ===
 pesos_crisp = np.mean(matriz_norm_crisp, axis=1)  # Média das linhas
@@ -275,12 +275,12 @@ df_pesos_fahp = pd.DataFrame({
     "Critério": criterios,
     "Peso Final": np.round(pesos_normalizados, 4)
 })
-st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
+#st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
 st.markdown("### 📊 Gráfico dos Pesos Relativos") 
 fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
-st.plotly_chart(fig_plotly, use_container_width=True)
+#st.plotly_chart(fig_plotly, use_container_width=True)
 
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
