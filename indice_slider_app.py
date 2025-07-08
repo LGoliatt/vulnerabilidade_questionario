@@ -258,7 +258,7 @@ st.plotly_chart(fig_plotly, use_container_width=True)
 # === MÉTRICAS DE CONSISTÊNCIA ===
 st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
 
-col_sum_def = np.mean(matriz_crisp, axis=0)  # Usa valores médios
+col_sum_def = np.sum(matriz_crisp, axis=0)  # Usa valores médios
 lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
 
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
