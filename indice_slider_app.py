@@ -153,8 +153,9 @@ fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in f
 matriz_fuzzy = np.zeros((n, n, 3))
 # Valores para slider (esquerda maior até 1, depois direita maior)
 
-fig, ax = plot_fuzzy_membership_plotly(fuzzy_scale)
-st.pyplot(fig)
+ig = plot_fuzzy_membership_plotly(fuzzy_scale)
+st.plotly_chart(fig, use_container_width=True)
+
 
 
 for i in range(n):
