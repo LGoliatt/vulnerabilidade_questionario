@@ -187,10 +187,9 @@ lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
 RI_dict = {1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
                6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
-RI_dict = {1: 1.00, 2: 1.00, 3: 0.58, 4: 0.90, 5: 1.12,
-               6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
+RI_dict = {1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0, 
+           6: 1.0, 7: 1.0, 8: 1.0, 9: 1.0, 10: 1.0}
 
-RI_dict = {i:1.0 for i in RI_dict}
 
 RI_fuzzy = RI_dict[n]
 CR_fuzzy = CI_fuzzy / RI_fuzzy if RI_fuzzy != 0 else 0
