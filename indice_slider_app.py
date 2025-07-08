@@ -282,6 +282,36 @@ if CR_fuzzy < 0.1:
 else:
     st.warning("A matriz fuzzy pode apresentar inconsistência. ⚠️")
     
+
+# === MÉTRICAS DE CONSISTÊNCIA USANDO PESOS DO EXCEL ===
+st.markdown("### 📈 Métricas de Consistência (Usando Pesos da Planilha Excel)")
+
+# Pesos fornecidos diretamente pela planilha Excel (linha 2, colunas P-E-D-U-T)
+pesos_excel = np.array([0.395317, 0.042053, 0.090468, 0.395317, 0.076846])  # já normalizados
+
+# Soma das colunas da matriz fuzzy (valores médios)
+soma_colunas = np.sum(matriz_crisp, axis=0)
+
+# Cálculo de λ_max, CI, CR com esses pesos
+lambda_max_excel = np.dot(soma_colunas, pesos_excel)
+CI_excel = (lambda_max_excel - n) / (n - 1)
+RI_dict = {
+    1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
+    6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49
+}
+CR_excel = CI_excel / RI_dict[n]
+
+c1, c2, c3 = st.columns(3)
+c1.metric("λ_max (com pesos Excel)", f"{lambda_max_excel:.3f}")
+c2.metric("CI (com pesos Excel)", f"{CI_excel:.3f}")
+c3.metric("CR (com pesos Excel)", f"{CR_excel:.3f}", delta="OK ✅" if CR_excel < 0.1 else "Ruim ❌")
+
+if CR_excel < 0.1:
+    st.success("A matriz fuzzy é considerada consistente. ✅")
+else:
+    st.warning("A matriz fuzzy pode apresentar inconsistência. ⚠️")
+
+    
 if st.button("📥 Exportar Pesos FAHP"):
     df_export = df_pesos_fahp.set_index("Critério")
     st.download_button(
