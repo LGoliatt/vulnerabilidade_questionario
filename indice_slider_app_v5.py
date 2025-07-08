@@ -2,6 +2,87 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+
+def plot_pesos_fahp_plotly(df_pesos: pd.DataFrame, titulo="Pesos Relativos dos Critérios (FAHP)"):
+    """
+    Gera um gráfico de barras interativo Plotly para os pesos dos critérios.
+
+    Parâmetros:
+        df_pesos (pd.DataFrame): DataFrame contendo as colunas 'Critério' e 'Peso Final'.
+        titulo (str): Título do gráfico.
+
+    Retorna:
+        fig (go.Figure): Figura do Plotly pronta para ser exibida.
+    """
+    fig = go.Figure(data=[
+        go.Bar(
+            x=df_pesos["Critério"],
+            y=df_pesos["Peso Final"],
+            text=[f"{peso:.3f}" for peso in df_pesos["Peso Final"]],
+            textposition="outside",
+            marker_color='indianred'
+        )
+    ])
+
+    fig.update_layout(
+        title=titulo,
+        xaxis_title="Critérios",
+        yaxis_title="Peso",
+        xaxis_tickangle=-45,
+        height=450,
+        margin=dict(l=40, r=40, t=60, b=80),
+        legend=dict(orientation="h")
+    )
+
+    return fig
+
+
+def plot_fuzzy_membership_plotly(fuzzy_scale, x_range=(0, 10), title="Funções de Pertinência Fuzzy"):
+    """
+    Plota funções de pertinência fuzzy triangulares usando Plotly.
+
+    Parâmetros:
+        fuzzy_scale (dict): Dicionário com os conjuntos fuzzy no formato {nível: (a, b, c)}.
+        x_range (tuple): Intervalo de valores de x para plotagem (início, fim).
+        title (str): Título do gráfico.
+
+    Retorna:
+        fig (plotly.graph_objects.Figure): Figura pronta para exibição com Streamlit.
+    """
+    def triangular(x, a, b, c):
+        return np.where(x <= a, 0,
+                        np.where(x <= b, (x - a) / (b - a),
+                                 np.where(x <= c, (c - x) / (c - b), 0)))
+
+    x = np.linspace(*x_range, 500)
+    fig = go.Figure()
+
+    for label, (a, b, c) in fuzzy_scale.items():
+        y = triangular(x, a, b, c)
+        fig.add_trace(go.Scatter(
+            x=x,
+            y=y,
+            mode='lines',
+            name=f"Nível {label} ({a}, {b}, {c})",
+            fill='tozeroy',
+            hovertemplate=f"Nível {label}<br>a={a}, b={b}, c={c}<br>x=%{{x:.2f}}<br>μ=%{{y:.2f}}<extra></extra>",
+            opacity=0.4
+        ))
+
+    fig.update_layout(
+        title=title,
+        xaxis_title="Valor de entrada",
+        yaxis_title="Grau de Pertinência",
+        height=500,
+        legend_title="Escalas Triangulares",
+        margin=dict(l=40, r=40, t=60, b=40),
+        xaxis=dict(range=[x_range[0], x_range[1]]),
+        yaxis=dict(range=[0, 1.05])
+    )
+
+    return fig
+
 
 def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership Functions", figsize=(9, 7)):
     """
@@ -69,6 +150,7 @@ st.image('5_fatores.png')
 # Critérios
 criterios = ["Knowledge", "Communication", "Experience"]
 criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo',]
+#criterios = ["A1", "A2", "A3"]
 
 n = len(criterios)
 
@@ -105,8 +187,9 @@ fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in f
 matriz_fuzzy = np.zeros((n, n, 3))
 # Valores para slider (esquerda maior até 1, depois direita maior)
 
-fig, ax = plot_fuzzy_membership(fuzzy_scale)
-st.pyplot(fig)
+fig = plot_fuzzy_membership_plotly(fuzzy_scale)
+st.plotly_chart(fig, use_container_width=True)
+
 
 
 for i in range(n):
@@ -169,25 +252,21 @@ st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
 st.markdown("### 📊 Gráfico dos Pesos Relativos") 
-fig_pesos, ax_pesos = plt.subplots(figsize=(8, 4))
-ax_pesos.bar(df_pesos_fahp["Critério"], df_pesos_fahp["Peso Final"])
-ax_pesos.set_ylabel("Peso")
-ax_pesos.set_title("Pesos Relativos dos Critérios")
-# Rotaciona os rótulos do eixo X
-ax_pesos.set_xticks(range(len(df_pesos_fahp)))
-ax_pesos.set_xticklabels(df_pesos_fahp["Critério"], rotation=45, ha='right')
-# Insere os valores acima das barras
-for i, v in enumerate(df_pesos_fahp["Peso Final"]):
-    ax_pesos.text(i, v + 0.01, f"{v:.2f}", ha='center', fontsize=10)
-
-st.pyplot(fig_pesos)
+fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
+st.plotly_chart(fig_plotly, use_container_width=True)
 
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
 st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
 
 col_sum_def = np.sum(matriz_crisp, axis=0)  # Usa valores médios
-lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
+#st.dataframe(col_sum_def)
+#st.dataframe(pesos_normalizados)
+#lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados) 
+
+lambda_max_fuzzy = abs(np.linalg.eigvals(df_matriz_fuzzy)).max()
+#st.subheader("Maior Autovalor (em valor absoluto):")
+#st.metric(label="λ_max", value=f"{lambda_max_fuzzy:.4f}")
 
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
 
@@ -210,6 +289,8 @@ if CR_fuzzy < 0.1:
 else:
     st.warning("A matriz fuzzy pode apresentar inconsistência. ⚠️")
     
+
+    
 if st.button("📥 Exportar Pesos FAHP"):
     df_export = df_pesos_fahp.set_index("Critério")
     st.download_button(
@@ -218,3 +299,5 @@ if st.button("📥 Exportar Pesos FAHP"):
         file_name="pesos_fahp.csv",
         mime="text/csv"
     )
+
+    

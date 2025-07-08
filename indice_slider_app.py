@@ -171,6 +171,31 @@ slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
                 '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']  
 slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9]
 
+# Definição da escala de importância com rótulos descritivos
+importancia_labels = [
+    "9 - Extrema importância (à esquerda)",
+    "8",
+    "7 - Muito forte importância (à esquerda)",
+    "6",
+    "5 - Forte importância (à esquerda)",
+    "4",
+    "3 - Moderada importância (à esquerda)",
+    "2",
+    "1 - Igual importância",
+    "2⁻¹",
+    "3⁻¹ - Moderada importância (à direita)",
+    "4⁻¹",
+    "5⁻¹ - Forte importância (à direita)",
+    "6⁻¹",
+    "7⁻¹ - Muito forte importância (à direita)",
+    "8⁻¹",
+    "9⁻¹ - Extrema importância (à direita)"
+]
+
+
+# Dicionário para mapear cada rótulo ao seu valor numérico
+label_to_value = dict(zip(importancia_labels, slider_values))
+
 
 fuzzy_scale = {
     1: (1, 1, 3),
@@ -191,7 +216,6 @@ fig = plot_fuzzy_membership_plotly(fuzzy_scale)
 st.plotly_chart(fig, use_container_width=True)
 
 
-
 for i in range(n):
     for j in range(i + 1, n):
         key = f"FAHP: {criterios[i]} vs {criterios[j]}"
@@ -201,26 +225,29 @@ for i in range(n):
         with col2:
             selected_label = st.select_slider(
                 f"Comparação entre '{criterios[i]}' e '{criterios[j]}'",
-                options=slider_labels,
-                value='1',
+                options=importancia_labels,
+                value="1 - Igual importância",
                 key=key,
-                help="Valores antes de '1': critério da esquerda é mais importante. Após '1': critério da direita é mais importante."
+                help="Selecione a importância relativa entre os critérios."
             )
         with col3:
             st.markdown(f"**{criterios[j]} ➡️**")
 
-        idx = slider_labels.index(selected_label)
-        val = slider_values[idx]
+        # Obtem o valor numérico correspondente ao rótulo selecionado
+        val = label_to_value[selected_label]
+        idx = importancia_labels.index(selected_label)
 
-        if idx <= slider_labels.index('1'):
-            matriz_fuzzy[i, j] = fuzzy_scale[int(val)]
-            matriz_fuzzy[j, i] = fuzzy_reciprocal[int(val)]
+        if idx <= importancia_labels.index("1 - Igual importância"):
+            # Critério à esquerda é mais importante ou igual
+            matriz_fuzzy[i, j] = fuzzy_scale[int(round(val))]
+            matriz_fuzzy[j, i] = fuzzy_reciprocal[int(round(val))]
         else:
+            # Critério à direita é mais importante
             matriz_fuzzy[i, j] = fuzzy_reciprocal[int(round(1 / val))]
             matriz_fuzzy[j, i] = fuzzy_scale[int(round(1 / val))]
 
     matriz_fuzzy[i, i] = (1, 1, 1)
-
+    
 
 # === MATRIZ DE COMPARAÇÃO FUZZY ===
 st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
