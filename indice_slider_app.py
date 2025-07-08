@@ -285,6 +285,12 @@ fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
 st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
+st.markdown("""
+💡 **Nota sobre a Razão de Consistência (CR):**  
+Para que a matriz de comparação seja considerada **consistentente aceitável**, 
+o valor de **CR deve ser menor que 0.1**. Valores acima disso indicam possíveis 
+inconsistências nas avaliações feitas e sugerem revisão das comparações pareadas.
+""")
 
 col_sum_def = np.sum(matriz_crisp, axis=0)  # Usa valores médios
 #st.dataframe(col_sum_def)
