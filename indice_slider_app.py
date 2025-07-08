@@ -321,7 +321,7 @@ c1.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if C
 if CR_fuzzy < 0.1:
     st.success("A matriz fuzzy é considerada consistente. ✅")
 else:
-    st.warning("A matriz fuzzy pode apresentar inconsistência. ⚠️ \n Por favor revise as comparações.")
+    st.warning("⚠️ A matriz fuzzy pode apresentar inconsistência. ⚠️ Por favor revise as comparações.")
     
 
     
