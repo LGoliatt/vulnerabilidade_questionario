@@ -278,9 +278,9 @@ df_pesos_fahp = pd.DataFrame({
 #st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
-#st.markdown("### 📊 Gráfico dos Pesos Relativos") 
+st.markdown("### 📊 Gráfico dos Pesos Relativos") 
 fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
-#st.plotly_chart(fig_plotly, use_container_width=True)
+st.plotly_chart(fig_plotly, use_container_width=True)
 
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
