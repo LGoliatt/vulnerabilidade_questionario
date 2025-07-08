@@ -169,18 +169,32 @@ st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
 st.markdown("### 📊 Gráfico dos Pesos Relativos") 
-fig_pesos, ax_pesos = plt.subplots(figsize=(8, 4))
-ax_pesos.bar(df_pesos_fahp["Critério"], df_pesos_fahp["Peso Final"])
-ax_pesos.set_ylabel("Peso")
-ax_pesos.set_title("Pesos Relativos dos Critérios")
-# Rotaciona os rótulos do eixo X
-ax_pesos.set_xticks(range(len(df_pesos_fahp)))
-ax_pesos.set_xticklabels(df_pesos_fahp["Critério"], rotation=45, ha='right')
-# Insere os valores acima das barras
-for i, v in enumerate(df_pesos_fahp["Peso Final"]):
-    ax_pesos.text(i, v + 0.01, f"{v:.2f}", ha='center', fontsize=10)
+import plotly.graph_objects as go
 
-st.pyplot(fig_pesos)
+# === GRÁFICO DE BARRAS DOS PESOS (PLOTLY) ===
+st.markdown("### 📊 Gráfico Interativo dos Pesos Relativos")
+
+fig_plotly = go.Figure(data=[
+    go.Bar(
+        x=df_pesos_fahp["Critério"],
+        y=df_pesos_fahp["Peso Final"],
+        text=[f"{peso:.2f}" for peso in df_pesos_fahp["Peso Final"]],
+        textposition="outside",
+        marker_color='indianred'
+    )
+])
+
+fig_plotly.update_layout(
+    title="Pesos Relativos dos Critérios (FAHP)",
+    xaxis_title="Critérios",
+    yaxis_title="Peso",
+    xaxis_tickangle=-45,
+    height=450,
+    margin=dict(l=40, r=40, t=60, b=80)
+)
+
+st.plotly_chart(fig_plotly, use_container_width=True)
+
 
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
