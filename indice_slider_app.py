@@ -181,7 +181,7 @@ fig_plotly = go.Figure(data=[
         text=[f"{peso:.2f}" for peso in df_pesos_fahp["Peso Final"]],
         textposition="outside",
         marker_color='indianred'
-    ) 
+    )
 ])
 
 fig_plotly.update_layout(
