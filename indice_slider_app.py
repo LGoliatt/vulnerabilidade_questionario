@@ -262,13 +262,11 @@ st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
 col_sum_def = np.sum(matriz_crisp, axis=0)  # Usa valores médios
 st.dataframe(col_sum_def)
 st.dataframe(pesos_normalizados)
-lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados) 
+#lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados) 
 
-lambd = abs(np.linalg.eigvals(df_matriz_fuzzy)).max()
+lambda_max_fuzzy = abs(np.linalg.eigvals(df_matriz_fuzzy)).max()
 st.subheader("Maior Autovalor (em valor absoluto):")
-
-lambda_max_fuzzy = lambd 
-st.metric(label="λ_max", value=f"{lambda_max_fuzzy:.4f}")
+#st.metric(label="λ_max", value=f"{lambda_max_fuzzy:.4f}")
 
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
 
