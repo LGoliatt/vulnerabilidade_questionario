@@ -3,21 +3,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# === Funções auxiliares ===
+
+def triangular(x, a, b, c):
+    return np.where(x <= a, 0,
+                    np.where(x <= b, (x - a) / (b - a),
+                             np.where(x <= c, (c - x) / (c - b), 0)))
+
 def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership Functions", figsize=(9, 7)):
-    """
-    Plots triangular fuzzy membership functions.
-
-    Parameters:
-        fuzzy_scale (dict): Dictionary of fuzzy sets with (a, b, c) triangle parameters.
-        x_range (tuple): Range of x values to plot (start, end).
-        title (str): Title of the plot.
-        figsize (tuple): Size of the figure (width, height).
-    """
-    def triangular(x, a, b, c):
-        return np.where(x <= a, 0,
-                        np.where(x <= b, (x - a) / (b - a),
-                                 np.where(x <= c, (c - x) / (c - b), 0)))
-
     x = np.linspace(*x_range, 500)
 
     fig, ax = plt.subplots(figsize=figsize)
@@ -36,12 +29,17 @@ def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership 
 
     return fig, ax
 
+def geometric_mean(matriz_fuzzy, n):
+    """ Método geométrico para FAHP """
+    prod_linha = np.prod(matriz_fuzzy, axis=1)
+    peso_fuzzy = prod_linha ** (1/n)
+    return peso_fuzzy
 
-#st.set_page_config(page_title="AHP e FAHP", layout="centered")
-#st.title("📊 AHP vs FAHP")
-#st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
+def defuzzify(tfns):
+    """ Defuzzifica números fuzzy triangulares pela média ponderada """
+    return np.array([(a + 4*b + c)/6 for a, b, c in tfns])
 
-
+# === Configuração da página ===
 st.set_page_config(page_title="Índice de vulnerabilidade hídrica natural em bacias hidrográficas", layout="centered")
 st.title("📊 Índice de vulnerabilidade hídrica natural em bacias hidrográficas")
 st.markdown(
@@ -65,14 +63,65 @@ que serão submetidos à especialistas para realização de comparações
 
 st.image('5_fatores.png')
 
-
 # Critérios
-criterios = ["Knowledge", "Communication", "Experience"]
-criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo',]
-
+criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo']
 n = len(criterios)
 
+# === Escala fuzzy e reciprocidade ===
+fuzzy_numbers = {
+    1:  (1, 1, 3),
+    2:  (1, 2, 3),
+    3:  (1, 3, 5),
+    4:  (3, 4, 5),
+    5:  (3, 5, 7),
+    6:  (5, 6, 7),
+    7:  (5, 7, 9),
+    8:  (7, 8, 9),
+    9:  (7, 9, 9)
+}
 
+# Recíprocos exatos
+fuzzy_reciprocal = {
+    1: (1/3, 1, 1),
+    2: (1/3, 1/2, 1),
+    3: (1/5, 1/3, 1),
+    4: (1/5, 1/4, 1/3),
+    5: (1/7, 1/5, 1/3),
+    6: (1/7, 1/6, 1/5),
+    7: (1/9, 1/7, 1/5),
+    8: (1/9, 1/8, 1/7),
+    9: (1/9, 1/9, 1/7)
+}
+
+slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
+                 '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']  
+slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9]
+
+# Mapeamento valor do slider -> número fuzzy
+value_to_tfn = {
+    '9': fuzzy_numbers[9],
+    '8': fuzzy_numbers[8],
+    '7': fuzzy_numbers[7],
+    '6': fuzzy_numbers[6],
+    '5': fuzzy_numbers[5],
+    '4': fuzzy_numbers[4],
+    '3': fuzzy_numbers[3],
+    '2': fuzzy_numbers[2],
+    '1': fuzzy_numbers[1],
+    '1/2': fuzzy_reciprocal[2],
+    '1/3': fuzzy_reciprocal[3],
+    '1/4': fuzzy_reciprocal[4],
+    '1/5': fuzzy_reciprocal[5],
+    '1/6': fuzzy_reciprocal[6],
+    '1/7': fuzzy_reciprocal[7],
+    '1/8': fuzzy_reciprocal[8],
+    '1/9': fuzzy_reciprocal[9]
+}
+
+# Inicializa matriz fuzzy
+matriz_fuzzy = np.zeros((n, n, 3))
+
+# Interface FAHP
 st.header("🧠 Método FAHP (Fuzzy AHP)")
 st.markdown("Compare os critérios levando em conta a incerteza das avaliações.")
 
@@ -85,29 +134,8 @@ st.markdown("""
 - 9 = Extrema importância  
 """)
 
-slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
-                '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']  
-slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9]
-
-
-fuzzy_scale = {
-    1: (1, 1, 3),
-    2: (1, 2, 3),
-    3: (1, 3, 5),
-    4: (3, 4, 5),
-    5: (3, 5, 7),
-    6: (5, 6, 7),
-    7: (5, 7, 9),
-    8: (7, 8, 9),
-    9: (7, 9, 9)
-}
-fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in fuzzy_scale.items()}
-matriz_fuzzy = np.zeros((n, n, 3))
-# Valores para slider (esquerda maior até 1, depois direita maior)
-
-fig, ax = plot_fuzzy_membership(fuzzy_scale)
+fig, ax = plot_fuzzy_membership(fuzzy_numbers)
 st.pyplot(fig)
-
 
 for i in range(n):
     for j in range(i + 1, n):
@@ -126,95 +154,66 @@ for i in range(n):
         with col3:
             st.markdown(f"**{criterios[j]} ➡️**")
 
-        idx = slider_labels.index(selected_label)
-        val = slider_values[idx]
-
-        if idx <= slider_labels.index('1'):
-            matriz_fuzzy[i, j] = fuzzy_scale[int(val)]
-            matriz_fuzzy[j, i] = fuzzy_reciprocal[int(val)]
+        # Atribuição fuzzy
+        if selected_label == '1':
+            matriz_fuzzy[i, j] = fuzzy_numbers[1]
+            matriz_fuzzy[j, i] = fuzzy_reciprocal[1]
+        elif slider_labels.index(selected_label) < slider_labels.index('1'):
+            matriz_fuzzy[i, j] = value_to_tfn[selected_label]
+            matriz_fuzzy[j, i] = fuzzy_reciprocal[int(slider_values[slider_labels.index(selected_label)])]
         else:
-            matriz_fuzzy[i, j] = fuzzy_reciprocal[int(round(1 / val))]
-            matriz_fuzzy[j, i] = fuzzy_scale[int(round(1 / val))]
+            matriz_fuzzy[j, i] = value_to_tfn[selected_label]
+            matriz_fuzzy[i, j] = fuzzy_reciprocal[int(round(1/slider_values[slider_labels.index(selected_label)]))]
 
     matriz_fuzzy[i, i] = (1, 1, 1)
 
+# === Exibir matriz fuzzy ===
+st.markdown("### 🧮 Matriz de Comparação Fuzzy (TFNs)")
+df_matriz = pd.DataFrame(index=criterios, columns=criterios)
+for i in range(n):
+    for j in range(n):
+        df_matriz.iloc[i, j] = str(tuple(np.round(matriz_fuzzy[i, j], 2)))
+st.dataframe(df_matriz)
 
-# === MATRIZ DE COMPARAÇÃO FUZZY ===
-st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
-matriz_media = matriz_fuzzy[:, :, 1]  # Usa o valor médio 'm' de cada TFN
-df_matriz_fuzzy = pd.DataFrame(matriz_media, index=criterios, columns=criterios)
-st.dataframe(df_matriz_fuzzy, height=250)
+# === Cálculo dos pesos fuzzy ===
+peso_fuzzy = geometric_mean(matriz_fuzzy, n)
+peso_crisp = defuzzify(peso_fuzzy)
+peso_normalizado = peso_crisp / np.sum(peso_crisp)
 
-# === NORMALIZAÇÃO DA MATRIZ CRISP ===
-matriz_crisp = matriz_fuzzy[:, :, 1]  # Extrai apenas o valor médio (m) de cada TFN
-sum_cols_crisp = np.sum(matriz_crisp, axis=0)  # Soma das colunas
-matriz_norm_crisp = matriz_crisp / sum_cols_crisp  # Normaliza por coluna
+# === Métricas de consistência (AHP clássico) ===
+matriz_crisp = matriz_fuzzy[:, :, 1]
+sum_cols = np.sum(matriz_crisp, axis=0)
+matriz_norm = matriz_crisp / sum_cols
+pesos_crsp = np.mean(matriz_norm, axis=1)
+lambda_max = np.dot(sum_cols, pesos_crsp)
+CI = (lambda_max - n) / (n - 1)
+RI_dict = {1:0, 2:0, 3:0.58, 4:0.90, 5:1.12, 6:1.24, 7:1.32, 8:1.41, 9:1.45, 10:1.49}
+RI = RI_dict.get(n, 1.0)
+CR = CI / RI if RI != 0 else 0
 
-# Exibe a matriz normalizada
-st.markdown("### 📐 Matriz Normalizada (valores crisp)")
-df_norm_crisp = pd.DataFrame(matriz_norm_crisp, index=criterios, columns=criterios)
-st.dataframe(df_norm_crisp, height=250)
-
-# === CÁLCULO DOS PESOS FINAIS ===
-pesos_crisp = np.mean(matriz_norm_crisp, axis=1)  # Média das linhas
-pesos_normalizados = pesos_crisp / np.sum(pesos_crisp)  # Normalização final
-
-# Exibe os pesos finais
-st.markdown("### 📊 Pesos Relativos dos Critérios")
-df_pesos_fahp = pd.DataFrame({
+# === Resultados finais ===
+st.markdown("### 📊 Pesos Relativos dos Critérios (FAHP)")
+df_pesos = pd.DataFrame({
     "Critério": criterios,
-    "Peso Final": np.round(pesos_normalizados, 4)
-})
-st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
+    "Peso Final": np.round(peso_normalizado, 4)
+}).set_index("Critério")
+st.dataframe(df_pesos)
 
-# === GRÁFICO DE BARRAS DOS PESOS ===
-st.markdown("### 📊 Gráfico dos Pesos Relativos") 
-fig_pesos, ax_pesos = plt.subplots(figsize=(8, 4))
-ax_pesos.bar(df_pesos_fahp["Critério"], df_pesos_fahp["Peso Final"])
-ax_pesos.set_ylabel("Peso")
-ax_pesos.set_title("Pesos Relativos dos Critérios")
-# Rotaciona os rótulos do eixo X
-ax_pesos.set_xticks(range(len(df_pesos_fahp)))
-ax_pesos.set_xticklabels(df_pesos_fahp["Critério"], rotation=45, ha='right')
-# Insere os valores acima das barras
-for i, v in enumerate(df_pesos_fahp["Peso Final"]):
-    ax_pesos.text(i, v + 0.01, f"{v:.2f}", ha='center', fontsize=10)
-
-st.pyplot(fig_pesos)
-
-
-# === MÉTRICAS DE CONSISTÊNCIA ===
-st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
-
-col_sum_def = np.sum(matriz_crisp, axis=0)  # Usa valores médios
-lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
-
-CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
-
-# Tabela real de RI (Índice Aleatório)
-RI_dict = {
-    1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
-    6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49
-}
-RI_fuzzy = RI_dict.get(n, 1.0)  # Usa valor padrão se não encontrado
-
-CR_fuzzy = CI_fuzzy / RI_fuzzy if RI_fuzzy != 0 else 0
-
+# === Consistência ===
 c1, c2, c3 = st.columns(3)
-c1.metric("λ_max (Fuzzy)", f"{lambda_max_fuzzy:.3f}")
-c2.metric("CI (Consistência Fuzzy)", f"{CI_fuzzy:.3f}")
-c3.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if CR_fuzzy < 0.1 else "Ruim ❌")
-
-if CR_fuzzy < 0.1:
-    st.success("A matriz fuzzy é considerada consistente. ✅")
+c1.metric("λ_max", f"{lambda_max:.3f}")
+c2.metric("CI", f"{CI:.3f}")
+c3.metric("CR", f"{CR:.3f}", delta="OK ✅" if CR < 0.1 else "Ruim ❌")
+if CR < 0.1:
+    st.success("Matriz consistente.")
 else:
-    st.warning("A matriz fuzzy pode apresentar inconsistência. ⚠️")
-    
+    st.warning("Inconsistência detectada. Reavalie suas comparações.")
+
+# === Exportação ===
 if st.button("📥 Exportar Pesos FAHP"):
-    df_export = df_pesos_fahp.set_index("Critério")
     st.download_button(
         label="Download CSV",
-        data=df_export.to_csv().encode("utf-8"),
+        data=df_pesos.to_csv().encode("utf-8"),
         file_name="pesos_fahp.csv",
         mime="text/csv"
     )
