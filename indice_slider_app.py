@@ -19,7 +19,7 @@ def plot_pesos_fahp_plotly(df_pesos: pd.DataFrame, titulo="Pesos Relativos dos C
         go.Bar(
             x=df_pesos["Critério"],
             y=df_pesos["Peso Final"],
-            text=[f"{peso:.2f}" for peso in df_pesos["Peso Final"]],
+            text=[f"{peso:.3f}" for peso in df_pesos["Peso Final"]],
             textposition="outside",
             marker_color='indianred'
         )
