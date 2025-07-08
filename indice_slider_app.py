@@ -138,59 +138,49 @@ for i in range(n):
 
     matriz_fuzzy[i, i] = (1, 1, 1)
 
-# === MATRIZ DE COMPARAÇÃO ===
-st.markdown("### 🧮 Matriz de Comparação (valores médios dos TFNs)")
-#matriz_media = np.round(matriz_fuzzy[:, :, 1], 3)
-matriz_media = matriz_fuzzy[:, :, 1]
+# === MATRIZ DE COMPARAÇÃO FUZZY ===
+st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
+matriz_media = matriz_fuzzy[:, :, 1]  # Usa o valor médio 'm' de cada TFN
 df_matriz_fuzzy = pd.DataFrame(matriz_media, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy, height=250)
-st.dataframe(df_matriz_fuzzy.sum(axis=0).T)
 
-# === CÁLCULO DE PESOS FUZZY ===
-sum_cols = np.sum(matriz_fuzzy, axis=0)
-norm_fuzzy = np.zeros((n, n, 3))
-for i in range(n):
-    for j in range(n):
-        norm_fuzzy[i, j] = (
-            matriz_fuzzy[i, j, 0] / sum_cols[j, 2],
-            matriz_fuzzy[i, j, 1] / sum_cols[j, 1],
-            matriz_fuzzy[i, j, 2] / sum_cols[j, 0]
-        )
+# === NORMALIZAÇÃO DA MATRIZ CRISP ===
+matriz_crisp = matriz_fuzzy[:, :, 1]  # Extrai apenas o valor médio (m) de cada TFN
+sum_cols_crisp = np.sum(matriz_crisp, axis=0)  # Soma das colunas
+matriz_norm_crisp = matriz_crisp / sum_cols_crisp  # Normaliza por coluna
 
-st.markdown("### 🧮 Matriz de Comparação Normalizada")
-matriz_media_ = norm_fuzzy[:, :, 1]
-df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
-st.dataframe(df_matriz_fuzzy_, height=250)
+# Exibe a matriz normalizada
+st.markdown("### 📐 Matriz Normalizada (valores crisp)")
+df_norm_crisp = pd.DataFrame(matriz_norm_crisp, index=criterios, columns=criterios)
+st.dataframe(df_norm_crisp, height=250)
 
-soma_linhas = np.sum(norm_fuzzy, axis=1)
-pesos_defuzzificados = [(l + 2*m + u) / 4 for l, m, u in soma_linhas]
-#pesos_defuzzificados = [(l + 1*m + u) / 3 for l, m, u in soma_linhas]
-pesos_normalizados = pesos_defuzzificados / np.sum(pesos_defuzzificados)
+# === CÁLCULO DOS PESOS FINAIS ===
+pesos_crisp = np.mean(matriz_norm_crisp, axis=1)  # Média das linhas
+pesos_normalizados = pesos_crisp / np.sum(pesos_crisp)  # Normalização final
 
-#media_linhas = df_matriz_fuzzy_.mean(axis=1)#--
-#st.dataframe(media_linhas, height=250) #--
-#pesos_normalizados = media_linhas
-
-# === PESOS RELATIVOS ===
+# Exibe os pesos finais
 st.markdown("### 📊 Pesos Relativos dos Critérios")
 df_pesos_fahp = pd.DataFrame({
     "Critério": criterios,
-    "Peso Fuzzy": [tuple(np.round(x*1.0, 3)) for x in soma_linhas],
     "Peso Final": np.round(pesos_normalizados, 4)
 })
 st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
 st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
-col_sum_def = np.sum(matriz_fuzzy[:, :, 1], axis=0)  # valor médio (m)
+
+col_sum_def = np.sum(matriz_crisp, axis=0)  # Usa valores médios
 lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
+
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
-RI_dict = {1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
-               6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
 
+# Tabela real de RI (Índice Aleatório)
+RI_dict = {
+    1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
+    6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49
+}
+RI_fuzzy = RI_dict.get(n, 1.0)  # Usa valor padrão se não encontrado
 
-
-RI_fuzzy = RI_dict[n]
 CR_fuzzy = CI_fuzzy / RI_fuzzy if RI_fuzzy != 0 else 0
 
 c1, c2, c3 = st.columns(3)
@@ -202,7 +192,7 @@ if CR_fuzzy < 0.1:
     st.success("A matriz fuzzy é considerada consistente. ✅")
 else:
     st.warning("A matriz fuzzy pode apresentar inconsistência. ⚠️")
-
+    
 if st.button("📥 Exportar Pesos FAHP"):
     df_export = df_pesos_fahp.set_index("Critério")
     st.download_button(
