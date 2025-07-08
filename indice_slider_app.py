@@ -162,8 +162,6 @@ matriz_media_ = norm_fuzzy[:, :, 1]
 df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy_, height=250)
 
-
-
 soma_linhas = np.sum(norm_fuzzy, axis=1)
 pesos_defuzzificados = [(l + 2*m + u) / 4 for l, m, u in soma_linhas]
 #pesos_defuzzificados = [(l + 1*m + u) / 3 for l, m, u in soma_linhas]
@@ -189,6 +187,11 @@ lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados)
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
 RI_dict = {1: 0.00, 2: 0.00, 3: 0.58, 4: 0.90, 5: 1.12,
                6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
+RI_dict = {1: 1.00, 2: 1.00, 3: 0.58, 4: 0.90, 5: 1.12,
+               6: 1.24, 7: 1.32, 8: 1.41, 9: 1.45, 10: 1.49}
+
+RI_dict = {i:1.0 for i in RI_dict}
+
 RI_fuzzy = RI_dict[n]
 CR_fuzzy = CI_fuzzy / RI_fuzzy if RI_fuzzy != 0 else 0
 
