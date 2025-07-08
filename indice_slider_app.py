@@ -162,7 +162,7 @@ matriz_media_ = norm_fuzzy[:, :, 1]
 df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy_, height=250)
 
-soma_linhas = np.sum(norm_fuzzy, axis=1)
+soma_linhas = np.sum(norm_fuzzy, axis=0)
 pesos_defuzzificados = [(l + 2*m + u) / 4 for l, m, u in soma_linhas]
 #pesos_defuzzificados = [(l + 1*m + u) / 3 for l, m, u in soma_linhas]
 pesos_normalizados = pesos_defuzzificados / np.sum(pesos_defuzzificados)
