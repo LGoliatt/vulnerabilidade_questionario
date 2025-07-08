@@ -147,7 +147,7 @@ st.dataframe(df_matriz_fuzzy, height=250)
 st.dataframe(df_matriz_fuzzy.sum(axis=0).T)
 
 # === CÁLCULO DE PESOS FUZZY ===
-sum_cols = np.mean(matriz_fuzzy, axis=0)
+sum_cols = np.mean(matriz_fuzzy, axis=1)
 norm_fuzzy = np.zeros((n, n, 3))
 for i in range(n):
     for j in range(n):
