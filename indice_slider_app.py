@@ -2,6 +2,54 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+
+
+def plot_fuzzy_membership_plotly(fuzzy_scale, x_range=(0, 10), title="Funções de Pertinência Fuzzy"):
+    """
+    Plota funções de pertinência fuzzy triangulares usando Plotly.
+
+    Parâmetros:
+        fuzzy_scale (dict): Dicionário com os conjuntos fuzzy no formato {nível: (a, b, c)}.
+        x_range (tuple): Intervalo de valores de x para plotagem (início, fim).
+        title (str): Título do gráfico.
+
+    Retorna:
+        fig (plotly.graph_objects.Figure): Figura pronta para exibição com Streamlit.
+    """
+    def triangular(x, a, b, c):
+        return np.where(x <= a, 0,
+                        np.where(x <= b, (x - a) / (b - a),
+                                 np.where(x <= c, (c - x) / (c - b), 0)))
+
+    x = np.linspace(*x_range, 500)
+    fig = go.Figure()
+
+    for label, (a, b, c) in fuzzy_scale.items():
+        y = triangular(x, a, b, c)
+        fig.add_trace(go.Scatter(
+            x=x,
+            y=y,
+            mode='lines',
+            name=f"Nível {label} ({a}, {b}, {c})",
+            fill='tozeroy',
+            hovertemplate=f"Nível {label}<br>a={a}, b={b}, c={c}<br>x=%{{x:.2f}}<br>μ=%{{y:.2f}}<extra></extra>",
+            opacity=0.4
+        ))
+
+    fig.update_layout(
+        title=title,
+        xaxis_title="Valor de entrada",
+        yaxis_title="Grau de Pertinência",
+        height=500,
+        legend_title="Escalas Triangulares",
+        margin=dict(l=40, r=40, t=60, b=40),
+        xaxis=dict(range=[x_range[0], x_range[1]]),
+        yaxis=dict(range=[0, 1.05])
+    )
+
+    return fig
+
 
 def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership Functions", figsize=(9, 7)):
     """
@@ -105,7 +153,7 @@ fuzzy_reciprocal = {k: tuple(round(1 / x, 4) for x in reversed(v)) for k, v in f
 matriz_fuzzy = np.zeros((n, n, 3))
 # Valores para slider (esquerda maior até 1, depois direita maior)
 
-fig, ax = plot_fuzzy_membership(fuzzy_scale)
+fig, ax = plot_fuzzy_membership_plotly(fuzzy_scale)
 st.pyplot(fig)
 
 
@@ -169,7 +217,6 @@ st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
 st.markdown("### 📊 Gráfico dos Pesos Relativos") 
-import plotly.graph_objects as go
 
 # === GRÁFICO DE BARRAS DOS PESOS (PLOTLY) ===
 st.markdown("### 📊 Gráfico Interativo dos Pesos Relativos")
