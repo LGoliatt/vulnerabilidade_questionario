@@ -173,7 +173,7 @@ slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1
 
 # Definição da escala de importância com rótulos descritivos
 importancia_labels = [
-    "9 - Extrema (à esquerda)",
+    "9 - Extrema (à esquerda)", 
     "8 - Entre muito forte à extrema (à esquerda)",
     "7 - Muito forte (à esquerda)",
     "6 - Entre forte à muito forte (à esquerda)",
