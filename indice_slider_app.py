@@ -264,7 +264,7 @@ st.dataframe(pesos_normalizados)
 lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados) 
 
 lambd = abs(np.linalg.eigvals(df_matriz_fuzzy)).max()
-st.dataframe(lambd)
+st.dataframe(pd.DataFrame(lambd))
 
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
 
