@@ -309,7 +309,8 @@ CR_fuzzy = CI_fuzzy / RI_fuzzy if RI_fuzzy != 0 else 0
 c1, c2, c3 = st.columns(3)
 #c1.metric("λ_max (Fuzzy)", f"{lambda_max_fuzzy:.3f}")
 #c2.metric("CI (Consistência Fuzzy)", f"{CI_fuzzy:.3f}")
-c3.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if CR_fuzzy < 0.1 else "Ruim ❌")
+#c3.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if CR_fuzzy < 0.1 else "Ruim ❌")
+c1.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if CR_fuzzy < 0.1 else "Ruim ❌")
 
 if CR_fuzzy < 0.1:
     st.success("A matriz fuzzy é considerada consistente. ✅")
