@@ -251,9 +251,6 @@ st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
 st.markdown("### 📊 Gráfico dos Pesos Relativos") 
-
-# === GRÁFICO DE BARRAS DOS PESOS (PLOTLY) ===
-st.markdown("### 📊 Gráfico Interativo dos Pesos Relativos")
 fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
 st.plotly_chart(fig_plotly, use_container_width=True)
 
