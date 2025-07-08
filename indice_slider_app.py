@@ -169,12 +169,19 @@ st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
 st.markdown("### 📊 Gráfico dos Pesos Relativos") 
-fig_pesos, ax_pesos = plt.subplots(figsize=(8, 5))
+fig_pesos, ax_pesos = plt.subplots(figsize=(8, 4))
 ax_pesos.bar(df_pesos_fahp["Critério"], df_pesos_fahp["Peso Final"])
 ax_pesos.set_ylabel("Peso")
 ax_pesos.set_title("Pesos Relativos dos Critérios")
+
+# Rotaciona os rótulos do eixo X
+ax_pesos.set_xticks(range(len(df_pesos_fahp)))
+ax_pesos.set_xticklabels(df_pesos_fahp["Critério"], rotation=45, ha='right')
+
+# Insere os valores acima das barras
 for i, v in enumerate(df_pesos_fahp["Peso Final"]):
     ax_pesos.text(i, v + 0.01, f"{v:.2f}", ha='center', fontsize=10)
+
 st.pyplot(fig_pesos)
 
 
