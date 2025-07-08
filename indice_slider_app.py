@@ -287,7 +287,12 @@ else:
 st.markdown("### 📈 Métricas de Consistência (Usando Pesos da Planilha Excel)")
 
 # Pesos fornecidos diretamente pela planilha Excel (linha 2, colunas P-E-D-U-T)
-pesos_excel = np.array([0.395317, 0.042053, 0.090468, 0.395317, 0.076846])  # já normalizados
+pesos_excel = np.array([0.394381573691919,
+0.041999353329403,
+0.089216450792806,
+0.394381573691919,
+0.080021048493955,
+])  # já normalizados
 
 # Soma das colunas da matriz fuzzy (valores médios)
 soma_colunas = np.sum(matriz_crisp, axis=0)
