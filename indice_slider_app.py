@@ -4,6 +4,39 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
+def plot_pesos_fahp_plotly(df_pesos: pd.DataFrame, titulo="Pesos Relativos dos Critérios (FAHP)"):
+    """
+    Gera um gráfico de barras interativo Plotly para os pesos dos critérios.
+
+    Parâmetros:
+        df_pesos (pd.DataFrame): DataFrame contendo as colunas 'Critério' e 'Peso Final'.
+        titulo (str): Título do gráfico.
+
+    Retorna:
+        fig (go.Figure): Figura do Plotly pronta para ser exibida.
+    """
+    fig = go.Figure(data=[
+        go.Bar(
+            x=df_pesos["Critério"],
+            y=df_pesos["Peso Final"],
+            text=[f"{peso:.2f}" for peso in df_pesos["Peso Final"]],
+            textposition="outside",
+            marker_color='indianred'
+        )
+    ])
+
+    fig.update_layout(
+        title=titulo,
+        xaxis_title="Critérios",
+        yaxis_title="Peso",
+        xaxis_tickangle=-45,
+        height=450,
+        margin=dict(l=40, r=40, t=60, b=80),
+        legend=dict(orientation="h")
+    )
+
+    return fig
+
 
 def plot_fuzzy_membership_plotly(fuzzy_scale, x_range=(0, 10), title="Funções de Pertinência Fuzzy"):
     """
@@ -221,28 +254,8 @@ st.markdown("### 📊 Gráfico dos Pesos Relativos")
 
 # === GRÁFICO DE BARRAS DOS PESOS (PLOTLY) ===
 st.markdown("### 📊 Gráfico Interativo dos Pesos Relativos")
-
-fig_plotly = go.Figure(data=[
-    go.Bar(
-        x=df_pesos_fahp["Critério"],
-        y=df_pesos_fahp["Peso Final"],
-        text=[f"{peso:.2f}" for peso in df_pesos_fahp["Peso Final"]],
-        textposition="outside",
-        marker_color='indianred'
-    )
-])
-
-fig_plotly.update_layout(
-    title="Pesos Relativos dos Critérios (FAHP)",
-    xaxis_title="Critérios",
-    yaxis_title="Peso",
-    xaxis_tickangle=-45,
-    height=450,
-    margin=dict(l=40, r=40, t=60, b=80)
-)
-
+fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
 st.plotly_chart(fig_plotly, use_container_width=True)
-
 
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
