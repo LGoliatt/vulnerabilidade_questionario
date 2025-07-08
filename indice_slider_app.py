@@ -263,6 +263,8 @@ st.dataframe(col_sum_def)
 st.dataframe(pesos_normalizados)
 lambda_max_fuzzy = np.dot(col_sum_def, pesos_normalizados) 
 
+#lambda_max_fuzzy = abs(np.linalg.eigvals(A)).max()
+
 CI_fuzzy = (lambda_max_fuzzy - n) / (n - 1)
 
 # Tabela real de RI (Índice Aleatório)
