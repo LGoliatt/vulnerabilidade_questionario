@@ -250,7 +250,7 @@ for i in range(n):
     
 
 # === MATRIZ DE COMPARAÇÃO FUZZY ===
-st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
+#st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
 matriz_media = matriz_fuzzy[:, :, 1]  # Usa o valor médio 'm' de cada TFN
 df_matriz_fuzzy = pd.DataFrame(matriz_media, index=criterios, columns=criterios)
 #st.dataframe(df_matriz_fuzzy, height=250)
@@ -261,7 +261,7 @@ sum_cols_crisp = np.sum(matriz_crisp, axis=0)  # Soma das colunas
 matriz_norm_crisp = matriz_crisp / sum_cols_crisp  # Normaliza por coluna
 
 # Exibe a matriz normalizada
-st.markdown("### 📐 Matriz Normalizada (valores crisp)")
+#st.markdown("### 📐 Matriz Normalizada (valores crisp)")
 df_norm_crisp = pd.DataFrame(matriz_norm_crisp, index=criterios, columns=criterios)
 #st.dataframe(df_norm_crisp, height=250)
 
