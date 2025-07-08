@@ -270,7 +270,7 @@ pesos_crisp = np.mean(matriz_norm_crisp, axis=1)  # Média das linhas
 pesos_normalizados = pesos_crisp / np.sum(pesos_crisp)  # Normalização final
 
 # Exibe os pesos finais
-st.markdown("### 📊 Pesos Relativos dos Critérios")
+#st.markdown("### 📊 Pesos Relativos dos Critérios")
 df_pesos_fahp = pd.DataFrame({
     "Critério": criterios,
     "Peso Final": np.round(pesos_normalizados, 4)
@@ -278,7 +278,7 @@ df_pesos_fahp = pd.DataFrame({
 #st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
 
 # === GRÁFICO DE BARRAS DOS PESOS ===
-st.markdown("### 📊 Gráfico dos Pesos Relativos") 
+#st.markdown("### 📊 Gráfico dos Pesos Relativos") 
 fig_plotly = plot_pesos_fahp_plotly(df_pesos_fahp)
 #st.plotly_chart(fig_plotly, use_container_width=True)
 
