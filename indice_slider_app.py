@@ -138,6 +138,7 @@ for i in range(n):
 
     matriz_fuzzy[i, i] = (1, 1, 1)
 
+
 # === MATRIZ DE COMPARAÇÃO FUZZY ===
 st.markdown("### 🧮 Matriz de Comparação Fuzzy (valores médios)")
 matriz_media = matriz_fuzzy[:, :, 1]  # Usa o valor médio 'm' de cada TFN
@@ -165,6 +166,17 @@ df_pesos_fahp = pd.DataFrame({
     "Peso Final": np.round(pesos_normalizados, 4)
 })
 st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
+
+# === GRÁFICO DE BARRAS DOS PESOS ===
+st.markdown("### 📊 Gráfico dos Pesos Relativos")
+fig_pesos, ax_pesos = plt.subplots(figsize=(8, 5))
+ax_pesos.bar(df_pesos_fahp["Critério"], df_pesos_fahp["Peso Final"])
+ax_pesos.set_ylabel("Peso")
+ax_pesos.set_title("Pesos Relativos dos Critérios")
+for i, v in enumerate(df_pesos_fahp["Peso Final"]):
+    ax_pesos.text(i, v + 0.01, f"{v:.2f}", ha='center', fontsize=10)
+st.pyplot(fig_pesos)
+
 
 # === MÉTRICAS DE CONSISTÊNCIA ===
 st.markdown("### 📈 Métricas de Consistência (Estimadas para FAHP)")
