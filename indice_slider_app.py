@@ -162,26 +162,6 @@ matriz_media_ = norm_fuzzy[:, :, 1]
 df_matriz_fuzzy_ = pd.DataFrame(matriz_media_, index=criterios, columns=criterios)
 st.dataframe(df_matriz_fuzzy_, height=250)
 
-#--
-# 1. Matriz crisp com valor médio dos TFNs
-matriz_crisp = matriz_fuzzy[:, :, 1]  # pega o 'm' de (l, m, u)
-
-# 2. Normaliza cada coluna
-sum_cols_crisp = np.sum(matriz_crisp, axis=0)
-matriz_norm_crisp = matriz_crisp / sum_cols_crisp
-
-# 3. Média das linhas = peso de cada critério
-pesos_crisp = np.mean(matriz_norm_crisp, axis=1)
-pesos_normalizados = pesos_crisp / np.sum(pesos_crisp)
-
-# 4. Resultado
-df_pesos_fahp = pd.DataFrame({
-    "Critério": criterios,
-    "Peso Final": np.round(pesos_normalizados, 4)
-})
-st.dataframe(df_pesos_fahp.set_index("Critério"), height=250)
-#--
-
 soma_linhas = np.sum(norm_fuzzy, axis=1)
 pesos_defuzzificados = [(l + 2*m + u) / 4 for l, m, u in soma_linhas]
 #pesos_defuzzificados = [(l + 1*m + u) / 3 for l, m, u in soma_linhas]
