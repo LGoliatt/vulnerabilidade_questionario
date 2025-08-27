@@ -3,6 +3,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+import os
+import json
+import uuid
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 def plot_pesos_fahp_plotly(df_pesos: pd.DataFrame, titulo="Pesos Relativos dos Critérios (FAHP)"):
     """
@@ -125,6 +130,46 @@ def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership 
 
 st.set_page_config(page_title="Índice de vulnerabilidade hídrica natural em bacias hidrográficas", layout="centered")
 st.title("📊 Índice de vulnerabilidade hídrica natural em bacias hidrográficas")
+
+
+
+st.header("📝 Perfil do Respondente")
+
+# Opções solicitadas
+idade_opts = [
+    "— Selecione —",
+    "De 18 a 24 anos",
+    "De 25 a 44 anos",
+    "De 45 a 64 anos",
+    "De 65 a 74 anos",
+    "Mais de 74 anos",
+]
+area_opts = [
+    "— Selecione —",
+    "Engenharia",
+    "Utilidades",
+    "Meio Ambiente",
+    "Sistemas ou Tecnologia da Informação",
+    "Marketing ou Divulgação",
+    "Gestão",
+    "Outros",
+]
+
+with st.form("perfil_respondente"):
+    st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às seguintes perguntas:**")
+
+    idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
+    area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
+    area_outros = ""
+    if area_sel == "Other:":
+        area_outros = st.text_input("Se você marcou 'Other:', especifique *", max_chars=80)
+
+
+    # Botão de submissão do formulário
+    submitted = st.form_submit_button("Enviar resposta")
+ 
+    
+ 
 st.markdown(
 '''
 O presente estudo utiliza a metodologia **Fuzzy AHP** para desenvolver um **índice 
