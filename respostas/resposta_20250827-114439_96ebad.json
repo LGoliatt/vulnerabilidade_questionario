@@ -1,0 +1,92 @@
+{
+  "saved_at_local": "2025-08-27T11:44:39-03:00",
+  "saved_at_utc": "2025-08-27T14:44:39Z",
+  "idade": "De 45 a 64 anos",
+  "area_atuacao": "Sistemas ou Tecnologia da Informação",
+  "dificuldade_avaliacao": null,
+  "sugestoes": null,
+  "criterios": [
+    "Precipitação",
+    "Elevação",
+    "Declividade",
+    "Uso e cobertura do solo",
+    "Textura do solo"
+  ],
+  "pesos_fahp": [
+    {
+      "Critério": "Precipitação",
+      "Peso Final": 0.265
+    },
+    {
+      "Critério": "Elevação",
+      "Peso Final": 0.1381
+    },
+    {
+      "Critério": "Declividade",
+      "Peso Final": 0.2393
+    },
+    {
+      "Critério": "Uso e cobertura do solo",
+      "Peso Final": 0.1551
+    },
+    {
+      "Critério": "Textura do solo",
+      "Peso Final": 0.2025
+    }
+  ],
+  "CR_fuzzy": 0.16432505875881634,
+  "lambda_max": 5.736176263239497,
+  "matriz_comparacao_media": {
+    "index": [
+      "Precipitação",
+      "Elevação",
+      "Declividade",
+      "Uso e cobertura do solo",
+      "Textura do solo"
+    ],
+    "columns": [
+      "Precipitação",
+      "Elevação",
+      "Declividade",
+      "Uso e cobertura do solo",
+      "Textura do solo"
+    ],
+    "values": [
+      [
+        1.0,
+        5.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        3.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.3333
+      ],
+      [
+        1.0,
+        1.0,
+        0.3333,
+        3.0,
+        1.0
+      ]
+    ]
+  }
+}
