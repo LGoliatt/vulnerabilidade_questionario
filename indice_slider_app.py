@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -8,6 +9,9 @@ import json
 import uuid
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import smtplib
+from email.mime.text import MIMEText
+
 
 def plot_pesos_fahp_plotly(df_pesos: pd.DataFrame, titulo="Pesos Relativos dos Critérios (FAHP)"):
     """
@@ -465,5 +469,16 @@ if submitted:
             mime="application/json",
         )
         
+        ##
+                
+        msg = MIMEText(json.dumps(resposta, indent=2, ensure_ascii=False))
+        msg['Subject'] = 'Nova resposta FAHP'
+        msg['From'] = 'app@meuapp.com'
+        msg['To'] = 'goliatt@gmail.com'
+        
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login("goliatt@gmail.com", "Aednu1sd*&tph7ij")
+            server.send_message(msg)
         
         
