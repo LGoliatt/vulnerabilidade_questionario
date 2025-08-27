@@ -1,0 +1,92 @@
+{
+  "saved_at_local": "2025-08-27T11:26:26-03:00",
+  "saved_at_utc": "2025-08-27T14:26:26Z",
+  "idade": "De 65 a 74 anos",
+  "area_atuacao": "Engenharia",
+  "dificuldade_avaliacao": "sim",
+  "sugestoes": "Gostaria de fazer alguma sugestão? Qual ou quais?",
+  "criterios": [
+    "Precipitação",
+    "Elevação",
+    "Declividade",
+    "Uso e cobertura do solo",
+    "Textura do solo"
+  ],
+  "pesos_fahp": [
+    {
+      "Critério": "Precipitação",
+      "Peso Final": 0.4712
+    },
+    {
+      "Critério": "Elevação",
+      "Peso Final": 0.1208
+    },
+    {
+      "Critério": "Declividade",
+      "Peso Final": 0.1477
+    },
+    {
+      "Critério": "Uso e cobertura do solo",
+      "Peso Final": 0.1556
+    },
+    {
+      "Critério": "Textura do solo",
+      "Peso Final": 0.1047
+    }
+  ],
+  "CR_fuzzy": 0.027638981306701043,
+  "lambda_max": 5.123822636254021,
+  "matriz_comparacao_media": {
+    "index": [
+      "Precipitação",
+      "Elevação",
+      "Declividade",
+      "Uso e cobertura do solo",
+      "Textura do solo"
+    ],
+    "columns": [
+      "Precipitação",
+      "Elevação",
+      "Declividade",
+      "Uso e cobertura do solo",
+      "Textura do solo"
+    ],
+    "values": [
+      [
+        1.0,
+        5.0,
+        4.0,
+        3.0,
+        3.0
+      ],
+      [
+        0.2,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        0.25,
+        1.0,
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        0.3333,
+        1.0,
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        0.3333,
+        1.0,
+        0.5,
+        0.5,
+        1.0
+      ]
+    ]
+  }
+}

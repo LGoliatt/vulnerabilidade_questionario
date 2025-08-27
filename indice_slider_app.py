@@ -155,20 +155,17 @@ area_opts = [
     "Outros",
 ]
 
-with st.form("perfil_respondente"):
-    st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às seguintes perguntas:**")
+st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às seguintes perguntas:**")
 
-    idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
-    area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
-    area_outros = ""
-    if area_sel == "Other:":
-        area_outros = st.text_input("Se você marcou 'Other:', especifique *", max_chars=80)
+idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
+area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
+area_outros = ""
+if area_sel == "Outros":
+    area_outros = st.text_input("Se você marcou 'Other:', especifique *", max_chars=80)
 
 
-    # Botão de submissão do formulário
-    submitted = st.form_submit_button("Enviar resposta")
- 
-    
+
+st.header("📝 Contexto da Pesquisa")
  
 st.markdown(
 '''
@@ -363,19 +360,110 @@ c1, c2, c3 = st.columns(3)
 #c3.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if CR_fuzzy < 0.1 else "Ruim ❌")
 c1.metric("CR (Razão de Consistência)", f"{CR_fuzzy:.3f}", delta="OK ✅" if CR_fuzzy < 0.1 else "Ruim ❌")
 
-if CR_fuzzy < 0.1:
+
+CR_OK = CR_fuzzy < 0.1
+CR_count = 0
+if CR_OK:    
     st.success("A matriz fuzzy é considerada consistente. ✅")
 else:
+    CR_count+=1
     st.warning("⚠️ A matriz fuzzy pode apresentar inconsistência. ⚠️ Por favor revise as comparações.")
     
 
     
-if st.button("📥 Exportar Pesos FAHP"):
-    df_export = df_pesos_fahp.set_index("Critério")
-    st.download_button(
-        label="Download CSV",
-        data=df_export.to_csv().encode("utf-8"),
-        file_name="pesos_fahp.csv",
-        mime="text/csv"
-    )
+#if st.button("📥 Exportar Pesos FAHP"):
+#    df_export = df_pesos_fahp.set_index("Critério")
+#    st.download_button(
+#        label="Download CSV",
+#        data=df_export.to_csv().encode("utf-8"),
+#        file_name="pesos_fahp.csv",
+#        mime="text/csv"
+#    )
 
+
+    
+with st.form("enviar_resposta"):
+    st.markdown("**Clique aqui para submeter sua resposta**")
+    
+    st.markdown("---")
+    st.markdown("**Feedback de usabilidade** (opcional)")
+    dificuldade_texto = st.text_area(
+           "Você teve dificuldade para avaliar algum item do formulário? Qual ou quais itens? Quais as dificuldades?",
+           placeholder="Descreva aqui eventuais dificuldades encontradas...",
+           height=120
+       )
+    sugestao_texto = st.text_area(
+           "Gostaria de fazer alguma sugestão? Qual ou quais?",
+           placeholder="Compartilhe aqui suas sugestões de melhoria...",
+           height=120
+       )
+    
+    # Botão de submissão do formulário
+    submitted = st.form_submit_button("Enviar resposta")
+
+
+# Processamento da submissão
+if submitted:
+    # Validações mínimas
+    erros = []
+    if idade_sel == "— Selecione —":
+        erros.append("• Selecione uma faixa de **Idade**.")
+    if area_sel == "— Selecione —":
+        erros.append("• Selecione a **Área de atuação**.")
+    if area_sel == "Other:" and not area_outros.strip():
+        erros.append("• Especifique a **Área de atuação** quando selecionar 'Other:'.")
+
+    if erros:
+        st.error("Não foi possível registrar a resposta:\n\n" + "\n".join(erros))
+    else:
+        # Timestamps
+        tz = ZoneInfo("America/Sao_Paulo")
+        now_local = datetime.now(tz)
+        now_utc = datetime.utcnow()
+
+        # Monta o payload da resposta
+        resposta = {
+            "saved_at_local": now_local.isoformat(timespec="seconds"),
+            "saved_at_utc": now_utc.isoformat(timespec="seconds") + "Z",
+            "idade": idade_sel,
+            "area_atuacao": (area_outros.strip() if area_sel == "Other:" else area_sel),
+
+            # Perguntas abertas (opcionais)
+            "dificuldade_avaliacao": dificuldade_texto.strip() if dificuldade_texto else None,
+            "sugestoes": sugestao_texto.strip() if sugestao_texto else None,
+
+            # Itens do FAHP atuais (úteis para análises por segmento)
+            "criterios": criterios,
+            "pesos_fahp": df_pesos_fahp.to_dict(orient="records"),
+            "CR_fuzzy": float(CR_fuzzy),
+            "lambda_max": float(np.real_if_close(lambda_max_fuzzy)),
+            "matriz_comparacao_media": {
+                "index": list(df_matriz_fuzzy.index),
+                "columns": list(df_matriz_fuzzy.columns),
+                "values": df_matriz_fuzzy.values.tolist(),
+            },
+        }
+
+        # Persistência: 1 arquivo por resposta
+        os.makedirs("respostas", exist_ok=True)
+        uid = uuid.uuid4().hex[:6]
+        fname = f"respostas/resposta_{now_local.strftime('%Y%m%d-%H%M%S')}_{uid}.json"
+        with open(fname, "w", encoding="utf-8") as f:
+            json.dump(resposta, f, ensure_ascii=False, indent=2)
+
+        st.success(f"Resposta registrada com sucesso em **{fname}**.")
+        st.caption(
+            f"Registro efetuado em {now_local.strftime('%d/%m/%Y %H:%M:%S')} (America/Sao_Paulo) "
+            f"| UTC: {now_utc.strftime('%Y-%m-%d %H:%M:%S')}Z"
+        )
+
+        # Facilita exportar a mesma resposta como download imediato
+        st.download_button(
+            label="⬇️ Baixar esta resposta (JSON)",
+            data=json.dumps(resposta, ensure_ascii=False, indent=2),
+            file_name=os.path.basename(fname),
+            mime="application/json",
+        )
+        
+        
+        

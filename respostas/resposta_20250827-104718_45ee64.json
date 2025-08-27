@@ -1,0 +1,90 @@
+{
+  "saved_at_local": "2025-08-27T10:47:18-03:00",
+  "saved_at_utc": "2025-08-27T13:47:18Z",
+  "idade": "De 18 a 24 anos",
+  "area_atuacao": "Meio Ambiente",
+  "criterios": [
+    "Precipitação",
+    "Elevação",
+    "Declividade",
+    "Uso e cobertura do solo",
+    "Textura do solo"
+  ],
+  "pesos_fahp": [
+    {
+      "Critério": "Precipitação",
+      "Peso Final": 0.4472
+    },
+    {
+      "Critério": "Elevação",
+      "Peso Final": 0.1326
+    },
+    {
+      "Critério": "Declividade",
+      "Peso Final": 0.1791
+    },
+    {
+      "Critério": "Uso e cobertura do solo",
+      "Peso Final": 0.1361
+    },
+    {
+      "Critério": "Textura do solo",
+      "Peso Final": 0.105
+    }
+  ],
+  "CR_fuzzy": 0.05624322170912592,
+  "lambda_max": 5.251969633256884,
+  "matriz_comparacao_media": {
+    "index": [
+      "Precipitação",
+      "Elevação",
+      "Declividade",
+      "Uso e cobertura do solo",
+      "Textura do solo"
+    ],
+    "columns": [
+      "Precipitação",
+      "Elevação",
+      "Declividade",
+      "Uso e cobertura do solo",
+      "Textura do solo"
+    ],
+    "values": [
+      [
+        1.0,
+        4.0,
+        3.0,
+        4.0,
+        3.0
+      ],
+      [
+        0.25,
+        1.0,
+        0.5,
+        2.0,
+        1.0
+      ],
+      [
+        0.3333,
+        2.0,
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        0.25,
+        0.5,
+        1.0,
+        1.0,
+        2.0
+      ],
+      [
+        0.3333,
+        1.0,
+        0.5,
+        0.5,
+        1.0
+      ]
+    ]
+  }
+}
