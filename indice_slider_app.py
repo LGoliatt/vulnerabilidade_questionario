@@ -163,7 +163,7 @@ area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo 
 area_outros = ""
 if area_sel == "Outros":
     area_outros = st.text_input("Se você marcou 'Other:', especifique *", max_chars=80)
-
+    
 
 
 st.header("📝 Contexto da Pesquisa")
@@ -411,8 +411,9 @@ if submitted:
         erros.append("• Selecione uma faixa de **Idade**.")
     if area_sel == "— Selecione —":
         erros.append("• Selecione a **Área de atuação**.")
-    if area_sel == "Other:" and not area_outros.strip():
-        erros.append("• Especifique a **Área de atuação** quando selecionar 'Other:'.")
+    if area_sel == "Outros" and not area_outros.strip():
+        erros.append("• Especifique a **Área de atuação** quando selecionar 'Outros'.")
+
 
     if erros:
         st.error("Não foi possível registrar a resposta:\n\n" + "\n".join(erros))
