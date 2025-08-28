@@ -19,8 +19,9 @@ from email.mime.multipart import MIMEMultipart
 def enviar_email(resposta):
     smtp_server = "smtp.gmail.com"
     port = 587
-    sender_email = "goliatt@gmail.com"
-    app_password = "fucmefnbedfcftbu"  # 🔐 Senha de app (16 caracteres, sem espaços)
+
+    app_password = st.secrets["gmail_app_password"]
+    sender_email = st.secrets["gmail_user"]
 
     recipient_email = "goliatt@gmail.com"  # ou outro e-mail seu
 
