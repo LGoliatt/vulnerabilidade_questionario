@@ -22,14 +22,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
-def enviar_email_anexo(resposta):
+def enviar_email_anexo(resposta,fname):
     smtp_server = "smtp.gmail.com"
     port = 587
     sender_email = "goliatt@gmail.com"
     app_password = "fucmefnbedfcftbu"  # 🔐 Senha de app
 
     recipient_email = "goliatt@gmail.com"
-    subject = "Nova resposta no questionário FAHP - " + resposta['saved_at_local']
+    subject = "Nova resposta no questionário FAHP - " + fname
 
     # Cria a mensagem
     msg = MIMEMultipart()
@@ -38,7 +38,7 @@ def enviar_email_anexo(resposta):
     msg["Subject"] = subject
 
     # Corpo do e-mail (simples)
-    body = "Segue em anexo a resposta completa do formulário FAHP: " + resposta['saved_at_local']
+    body = "Segue em anexo a resposta completa do formulário FAHP: " + fname
     msg.attach(MIMEText(body, "plain", "utf-8"))
 
     # Converte a resposta em JSON e anexa como arquivo
@@ -51,7 +51,8 @@ def enviar_email_anexo(resposta):
     encoders.encode_base64(attachment)
     attachment.add_header(
         "Content-Disposition",
-        f"attachment; filename= resposta_fahp_{resposta['saved_at_local'].replace(':', '-').replace('T', '_')}.json"
+        #f"attachment; filename= resposta_fahp_{resposta['saved_at_local'].replace(':', '-').replace('T', '_')}.json"
+        f"attachment; filename= {fname}"
     )
     msg.attach(attachment)
 
@@ -67,7 +68,7 @@ def enviar_email_anexo(resposta):
         print(f"Erro ao enviar e-mail: {e}")
         return False
     
-def enviar_email(resposta):
+def enviar_email(resposta,fname):
     smtp_server = "smtp.gmail.com"
     port = 587
     sender_email = "goliatt@gmail.com"
@@ -556,8 +557,8 @@ if submitted:
             mime="application/json",
         )
         
-        #enviar_email(resposta)     
-        enviar_email_anexo(resposta)     
+        #enviar_email(resposta, fname)     
+        enviar_email_anexo(resposta, fname)     
             
              
 #%%      
