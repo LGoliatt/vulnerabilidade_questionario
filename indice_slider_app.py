@@ -29,7 +29,7 @@ def enviar_email_anexo(resposta,fname):
     app_password = "fucmefnbedfcftbu"  # 🔐 Senha de app
 
     recipient_email = "goliatt@gmail.com"
-    subject = "Nova resposta no questionário FAHP - " + fname
+    subject = "[ArcelorMittal] [Vulnerabilidade] Nova resposta no questionário FAHP - " + fname
 
     # Cria a mensagem
     msg = MIMEMultipart()
