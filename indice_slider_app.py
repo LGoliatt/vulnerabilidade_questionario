@@ -29,7 +29,6 @@ def enviar_email(resposta):
     msg["To"] = recipient_email
     msg["Subject"] = "Nova resposta no questionário FAHP - "+resposta['saved_at_local']
 
-
     body = f"Resposta recebida:\n\n{resposta}"
     msg.attach(MIMEText(body, "plain", "utf-8"))
 
