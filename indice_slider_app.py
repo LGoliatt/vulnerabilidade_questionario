@@ -227,8 +227,10 @@ st.header("📝 Perfil do Respondente")
 idade_opts = [
     "— Selecione —",
     "De 18 a 24 anos",
-    "De 25 a 44 anos",
-    "De 45 a 64 anos",
+    "De 25 a 34 anos",
+    "De 35 a 44 anos",
+    "De 45 a 54 anos",
+    "De 55 a 64 anos",
     "De 65 a 74 anos",
     "Mais de 74 anos",
 ]
