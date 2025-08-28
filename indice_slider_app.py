@@ -10,6 +10,39 @@ import uuid
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+#fucm efnb edfc ftbu
+
+def enviar_email(resposta):
+    smtp_server = "smtp.gmail.com"
+    port = 587
+    sender_email = "goliatt@gmail.com"
+    app_password = "fucmefnbedfcftbu"  # 🔐 Senha de app (16 caracteres, sem espaços)
+
+    recipient_email = "goliatt@gmail.com"  # ou outro e-mail seu
+
+    msg = MIMEMultipart()
+    msg["From"] = sender_email
+    msg["To"] = recipient_email
+    msg["Subject"] = "Nova resposta no questionário FAHP"
+
+    body = f"Resposta recebida:\n\n{resposta}"
+    msg.attach(MIMEText(body, "plain", "utf-8"))
+
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.starttls()  # Ativa criptografia
+        server.login(sender_email, app_password)  # Usa a senha de app
+        server.sendmail(sender_email, recipient_email, msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")
+        return False
+    
 def plot_pesos_fahp_plotly(df_pesos: pd.DataFrame, titulo="Pesos Relativos dos Critérios (FAHP)"):
     """
     Gera um gráfico de barras interativo Plotly para os pesos dos critérios.
@@ -467,5 +500,8 @@ if submitted:
             mime="application/json",
         )
         
-        
-        
+        enviar_email(resposta)     
+            
+             
+#%%      
+  
