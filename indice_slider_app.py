@@ -555,7 +555,7 @@ if submitted:
         )
         
         enviar_email(resposta)     
-        enviar_emai_anexol(resposta)     
+        enviar_emai_anexo(resposta)     
             
              
 #%%      
