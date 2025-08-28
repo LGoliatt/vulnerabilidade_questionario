@@ -15,7 +15,58 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 #fucm efnb edfc ftbu
+import smtplib
+import json
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
+def enviar_email_anexo(resposta):
+    smtp_server = "smtp.gmail.com"
+    port = 587
+    sender_email = "goliatt@gmail.com"
+    app_password = "fucmefnbedfcftbu"  # 🔐 Senha de app
+
+    recipient_email = "goliatt@gmail.com"
+    subject = "Nova resposta no questionário FAHP - " + resposta['saved_at_local']
+
+    # Cria a mensagem
+    msg = MIMEMultipart()
+    msg["From"] = sender_email
+    msg["To"] = recipient_email
+    msg["Subject"] = subject
+
+    # Corpo do e-mail (simples)
+    body = "Segue em anexo a resposta completa do formulário FAHP."
+    msg.attach(MIMEText(body, "plain", "utf-8"))
+
+    # Converte a resposta em JSON e anexa como arquivo
+    json_string = json.dumps(resposta, ensure_ascii=False, indent=4)
+    json_bytes = json_string.encode('utf-8')
+
+    # Cria o anexo
+    attachment = MIMEBase('application', 'octet-stream')
+    attachment.set_payload(json_bytes)
+    encoders.encode_base64(attachment)
+    attachment.add_header(
+        "Content-Disposition",
+        f"attachment; filename= resposta_fahp_{resposta['saved_at_local'].replace(':', '-').replace('T', '_')}.json"
+    )
+    msg.attach(attachment)
+
+    # Envia o e-mail
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.starttls()
+        server.login(sender_email, app_password)
+        server.sendmail(sender_email, recipient_email, msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")
+        return False
+    
 def enviar_email(resposta):
     smtp_server = "smtp.gmail.com"
     port = 587
@@ -504,6 +555,7 @@ if submitted:
         )
         
         enviar_email(resposta)     
+        enviar_emai_anexol(resposta)     
             
              
 #%%      
