@@ -554,7 +554,7 @@ if submitted:
             mime="application/json",
         )
         
-        enviar_email(resposta)     
+        #enviar_email(resposta)     
         enviar_email_anexo(resposta)     
             
              
