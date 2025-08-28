@@ -38,7 +38,7 @@ def enviar_email_anexo(resposta):
     msg["Subject"] = subject
 
     # Corpo do e-mail (simples)
-    body = "Segue em anexo a resposta completa do formulário FAHP."
+    body = "Segue em anexo a resposta completa do formulário FAHP: " + resposta['saved_at_local']
     msg.attach(MIMEText(body, "plain", "utf-8"))
 
     # Converte a resposta em JSON e anexa como arquivo
