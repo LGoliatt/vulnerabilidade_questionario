@@ -226,6 +226,7 @@ st.header("📝 Perfil do Respondente")
 
 # Opções solicitadas
 comite_opts =[
+    "— Selecione —",
     "PCJ - Comitê de Bacia Hidrográfica dos Rios Piracicaba",
     "Outro",
 ]
@@ -251,6 +252,8 @@ area_opts = [
 ]
 
 st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às seguintes perguntas:**")
+
+comite_sel = st.selectbox("Comitê *", comite_opts, index=0, help="Campo obrigatório.")
 
 idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
 area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
