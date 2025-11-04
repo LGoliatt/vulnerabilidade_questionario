@@ -525,6 +525,7 @@ if submitted:
             "saved_at_local": now_local.isoformat(timespec="seconds"),
             "saved_at_utc": now_utc.isoformat(timespec="seconds") + "Z",
             "idade": idade_sel,
+            "comite": comite_sel,
             "area_atuacao": (area_outros.strip() if area_sel == "Other:" else area_sel),
 
             # Perguntas abertas (opcionais)
