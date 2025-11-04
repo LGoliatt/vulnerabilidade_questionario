@@ -225,6 +225,10 @@ st.title("📊 Índice de vulnerabilidade hídrica natural em bacias hidrográfi
 st.header("📝 Perfil do Respondente")
 
 # Opções solicitadas
+comite_opts =[
+    "PCJ - Comitê de Bacia Hidrográfica dos Rios Piracicaba",
+    "Outro",
+]
 idade_opts = [
     "— Selecione —",
     "De 18 a 24 anos",
