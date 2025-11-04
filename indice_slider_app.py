@@ -230,7 +230,7 @@ comite_opts =[
     "PSI – Comitê da Bacia Hidrográfica dos Afluentes Mineiros dos Rios Preto e Paraibuna",
     "DO02 – Comitê da Bacia Hidrográfica do Rio Piracicaba",
     "CEIVAP – Comitê para Integração da Bacia Hidrográfica do Rio Paraíba do Sul",
-    "PCJ – Consorcio das Bacias dos Rios Piracicaba, Capivari e Jundiai",
+    "PCJ – Consórcio das Bacias dos Rios Piracicaba, Capivari e Jundiai",
     "Outro",
 ]
 idade_opts = [
