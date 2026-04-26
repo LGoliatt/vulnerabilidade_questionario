@@ -21,7 +21,22 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
+#%%
+import requests
+import threading
+import time
 
+def wake_self_loop():
+    """Faz ping em si mesmo a cada 30 minutos"""
+    while True:
+        time.sleep(1800)  # 30 minutos
+        try:
+            requests.get("https://vulnerabilidade_questionario.streamlit.app")
+        except:
+            pass
+
+# Iniciar thread de wake-up
+threading.Thread(target=wake_self_loop, daemon=True).start()
 def enviar_email_anexo(resposta,fname):
     smtp_server = "smtp.gmail.com"
     port = 587
