@@ -31,7 +31,7 @@ def wake_self_loop():
     while True:
         time.sleep(1800)  # 30 minutos
         try:
-            requests.get("https://vulnerabilidade_questionario.streamlit.app")
+            requests.get("https://lgoliatt-vulnerabilidade-questionario-indice-slider-app-dpcwfk.streamlit.app")
         except:
             pass
 
