@@ -309,7 +309,7 @@ st.image('to_be_inserted.png')
 # Critérios
 criterios = ["Knowledge", "Communication", "Experience"]
 criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo',]
-criterios = ["A1", "A2", "A3", "A4"]
+# criterios = ["A1", "A2", "A3", "A4"]
 
 n = len(criterios)
 
