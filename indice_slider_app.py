@@ -302,7 +302,8 @@ que serão submetidos à especialistas para realização de comparações
 '''
 )
 
-st.image('5_fatores.png')
+# st.image('5_fatores.png')
+st.image('to_be_inserted.png')
 
 
 # Critérios
