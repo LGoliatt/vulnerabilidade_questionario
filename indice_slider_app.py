@@ -662,9 +662,16 @@ if submitted:
         resposta = {
             "saved_at_local": now_local.isoformat(timespec="seconds"),
             "saved_at_utc": now_utc.isoformat(timespec="seconds") + "Z",
-            "idade": idade_sel,
-            "comite": comite_sel,
-            "area_atuacao": (area_outros.strip() if area_sel == "Other:" else area_sel),
+            #"idade": idade_sel,
+            #"comite": comite_sel,
+                        "Nome": nome,
+                        "Email": email,
+                        "Instituição/Empresa": instituicao,
+                        "Cargo/Função": cargo,
+                        "Idade": idade_sel,
+                        "Especialista": especialista,
+                        "Experiência": experiencia,
+            #"area_atuacao": (area_outros.strip() if area_sel == "Other:" else area_sel),
 
             # Perguntas abertas (opcionais)
             "dificuldade_avaliacao": dificuldade_texto.strip() if dificuldade_texto else None,
