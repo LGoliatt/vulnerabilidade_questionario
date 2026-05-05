@@ -232,8 +232,8 @@ def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership 
 #st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
 
 
-st.set_page_config(page_title="FATORES INTERNOS DE GESTÃO HÍDRICA INDUSTRIAL", layout="centered")
-st.title("📊 FATORES INTERNOS DE GESTÃO HÍDRICA INDUSTRIAL")
+st.set_page_config(page_title="Índice de vulnerabilidade hídrica natural em bacias hidrográficas", layout="centered")
+st.title("📊 Índice de vulnerabilidade hídrica natural em bacias hidrográficas")
 
 
 
