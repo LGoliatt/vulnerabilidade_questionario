@@ -285,6 +285,8 @@ cargo = st.text_input("Cargo/Função")
 st.subheader("2. Informações Pessoais e Profissionais")
 
 # Idade
+idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
+
 idade = st.radio(
     "Idade",
     (
@@ -348,7 +350,7 @@ st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às segu
 
 #comite_sel = st.selectbox("Comitê *", comite_opts, index=0, help="Campo obrigatório.")
 
-idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
+#idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
 #area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
 #area_outros = ""
 #if area_sel == "Outros":
