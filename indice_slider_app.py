@@ -409,6 +409,35 @@ st.markdown("""
 - 9 = Extrema importância  
 """)
 
+
+
+st.markdown("### ⚖️ Critérios de Comparação entre Fatores")
+# Bloco de explicação sobre a escala
+st.info("""
+**Como avaliar a importância entre os fatores?**
+
+A comparação é baseada na sua percepção de importância entre dois fatores. Quando você compara o **Fator 1** em relação ao **Fator 2**, a escala indica a intensidade dessa relação:
+
+* **Valor 1:** O Fator 1 tem **Importância absoluta / Extrema importância** em relação ao Fator 2 (e o Fator 2 possui insignificância absoluta em relação ao Fator 1).
+* **Valor 9:** O Fator 2 tem **Importância absoluta / Extrema importância** em relação ao Fator 1 (e o Fator 1 é insignificante em relação ao Fator 2).
+* **Valores intermediários (2 a 8):** Representam importâncias graduais entre esses dois extremos, permitindo nuances na sua avaliação.
+""")
+
+# Bloco de aviso sobre consistência
+with st.expander("⚠️ Atenção à Consistência das Respostas", expanded=True):
+    st.write("""
+    É crucial que as comparações sejam **minimamente consistentes** para garantir a validade das decisões. 
+    
+    Consistência significa que suas preferências seguem uma lógica matemática e conceitual clara. **Exemplo prático:**
+    
+    * Se o **Fator A** é considerado mais importante do que o **Fator B**.
+    * E o **Fator B** é considerado mais importante do que o **Fator C**.
+    * **Espera-se que:** Você prefira o **Fator A** ao **Fator C**.
+    
+    Respostas inconsistentes podem gerar ciclos nas preferências, comprometendo os resultados e a qualidade da decisão final.
+    """)
+    
+
 slider_labels = ['9', '8', '7', '6', '5', '4', '3', '2', '1',
                 '1/2', '1/3', '1/4', '1/5', '1/6', '1/7', '1/8', '1/9']  
 slider_values = [9, 8, 7, 6, 5, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9]
