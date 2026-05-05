@@ -238,6 +238,37 @@ st.title("📊 Fatores Internos de Gestão Hídrica Industrial")
 
 
 st.header("📝 Perfil do Respondente")
+ 
+        
+# Opções solicitadas
+comite_opts =[
+    "— Selecione —",
+    "PSI – Comitê da Bacia Hidrográfica dos Afluentes Mineiros dos Rios Preto e Paraibuna",
+    "DO02 – Comitê da Bacia Hidrográfica do Rio Piracicaba",
+    "CEIVAP – Comitê para Integração da Bacia Hidrográfica do Rio Paraíba do Sul",
+    "PCJ – Consórcio das Bacias dos Rios Piracicaba, Capivari e Jundiai",
+    "Outro",
+]
+idade_opts = [
+    "— Selecione —",
+    "De 18 a 24 anos",
+    "De 25 a 34 anos",
+    "De 35 a 44 anos",
+    "De 45 a 54 anos",
+    "De 55 a 64 anos",
+    "De 65 a 74 anos",
+    "Mais de 74 anos",
+]
+area_opts = [
+    "— Selecione —",
+    "Engenharia",
+    "Utilidades",
+    "Meio Ambiente",
+    "Sistemas ou Tecnologia da Informação",
+    "Marketing ou Divulgação",
+    "Gestão",
+    "Outros",
+]
 
 
 st.write("Por favor, preencha as informações abaixo para o perfil do respondente.")
@@ -254,16 +285,19 @@ cargo = st.text_input("Cargo/Função")
 st.subheader("2. Informações Pessoais e Profissionais")
 
 # Idade
-idade = st.radio(
-    "Idade",
-    (
-        "De 18 a 24 anos",
-        "De 25 a 44 anos",
-        "De 45 a 64 anos",
-        "De 65 a 74 anos",
-        "Mais de 74 anos"
-    )
-)
+
+idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
+
+#idade = st.radio(
+#    "Idade",
+#    (
+#        "De 18 a 24 anos",
+#        "De 25 a 44 anos",
+#        "De 45 a 64 anos",
+#        "De 65 a 74 anos",
+#        "Mais de 74 anos"
+#    )
+#)
 
 # Especialista
 especialista = st.radio(
@@ -311,44 +345,14 @@ experiencia = st.selectbox(
 #        # Exemplo: st.session_state['dados'] = dados_respondente
         
         
-        
-        
-# Opções solicitadas
-comite_opts =[
-    "— Selecione —",
-    "PSI – Comitê da Bacia Hidrográfica dos Afluentes Mineiros dos Rios Preto e Paraibuna",
-    "DO02 – Comitê da Bacia Hidrográfica do Rio Piracicaba",
-    "CEIVAP – Comitê para Integração da Bacia Hidrográfica do Rio Paraíba do Sul",
-    "PCJ – Consórcio das Bacias dos Rios Piracicaba, Capivari e Jundiai",
-    "Outro",
-]
-idade_opts = [
-    "— Selecione —",
-    "De 18 a 24 anos",
-    "De 25 a 34 anos",
-    "De 35 a 44 anos",
-    "De 45 a 54 anos",
-    "De 55 a 64 anos",
-    "De 65 a 74 anos",
-    "Mais de 74 anos",
-]
-area_opts = [
-    "— Selecione —",
-    "Engenharia",
-    "Utilidades",
-    "Meio Ambiente",
-    "Sistemas ou Tecnologia da Informação",
-    "Marketing ou Divulgação",
-    "Gestão",
-    "Outros",
-]
+       
 
 st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às seguintes perguntas:**")
 
 #comite_sel = st.selectbox("Comitê *", comite_opts, index=0, help="Campo obrigatório.")
 
 idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
-#area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
+##area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
 #area_outros = ""
 #if area_sel == "Outros":
 #    area_outros = st.text_input("Se você marcou 'Other:', especifique *", max_chars=80)
