@@ -425,7 +425,7 @@ A comparação é baseada na sua percepção de importância entre dois fatores.
 
 * **Valor  9  :** O Fator 1 tem **Importância absoluta / Extrema importância** em relação ao Fator 2 (e o Fator 2 possui insignificância absoluta em relação ao Fator 1).
 * **Valor 1/9 :** O Fator 2 tem **Importância absoluta / Extrema importância** em relação ao Fator 1 (e o Fator 1 é insignificante em relação ao Fator 2).
-* **Valores intermediários (2 a 8):** Representam importâncias graduais entre esses dois extremos, permitindo nuances na sua avaliação.
+* **Valores intermediários:** Representam importâncias graduais entre esses dois extremos, permitindo nuances na sua avaliação.
 """)
 
 # Bloco de aviso sobre consistência
