@@ -622,12 +622,12 @@ with st.form("enviar_resposta"):
     st.markdown("---")
     st.markdown("**Feedback de usabilidade** (opcional)")
     dificuldade_texto = st.text_area(
-           "Você teve dificuldade para avaliar algum item do formulário? Qual ou quais itens? Quais as dificuldades?",
+           "Você teve algum grau de dificuldade para avaliar algum item do formulário? Se sim, aponte o item e explique-nos o porquê.",
            placeholder="Descreva aqui eventuais dificuldades encontradas...",
            height=120
        )
     sugestao_texto = st.text_area(
-           "Gostaria de fazer alguma sugestão? Qual ou quais?",
+           "Caso julgue necessário, insira comentários e/ou sugestões gerais acerca do formulário/metodologia.",
            placeholder="Compartilhe aqui suas sugestões de melhoria...",
            height=120
        )
