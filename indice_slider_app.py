@@ -285,19 +285,16 @@ cargo = st.text_input("Cargo/Função")
 st.subheader("2. Informações Pessoais e Profissionais")
 
 # Idade
-
-idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
-
-#idade = st.radio(
-#    "Idade",
-#    (
-#        "De 18 a 24 anos",
-#        "De 25 a 44 anos",
-#        "De 45 a 64 anos",
-#        "De 65 a 74 anos",
-#        "Mais de 74 anos"
-#    )
-#)
+idade = st.radio(
+    "Idade",
+    (
+        "De 18 a 24 anos",
+        "De 25 a 44 anos",
+        "De 45 a 64 anos",
+        "De 65 a 74 anos",
+        "Mais de 74 anos"
+    )
+)
 
 # Especialista
 especialista = st.radio(
@@ -352,7 +349,7 @@ st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às segu
 #comite_sel = st.selectbox("Comitê *", comite_opts, index=0, help="Campo obrigatório.")
 
 idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
-##area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
+#area_sel = st.selectbox("Área de atuação *", area_opts, index=0, help="Campo obrigatório.")
 #area_outros = ""
 #if area_sel == "Outros":
 #    area_outros = st.text_input("Se você marcou 'Other:', especifique *", max_chars=80)
