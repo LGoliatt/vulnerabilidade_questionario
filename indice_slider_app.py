@@ -491,6 +491,8 @@ matriz_fuzzy = np.zeros((n, n, 3))
 #fig = plot_fuzzy_membership_plotly(fuzzy_scale)
 #st.plotly_chart(fig, use_container_width=True)
 
+st.markdown("### 📋 Vamos começar?")
+
 
 for i in range(n):
     for j in range(i + 1, n):
