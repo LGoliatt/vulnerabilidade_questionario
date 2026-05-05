@@ -644,10 +644,10 @@ if submitted:
     erros = []
     if idade_sel == "— Selecione —":
         erros.append("• Selecione uma faixa de **Idade**.")
-    if area_sel == "— Selecione —":
-        erros.append("• Selecione a **Área de atuação**.")
-    if area_sel == "Outros" and not area_outros.strip():
-        erros.append("• Especifique a **Área de atuação** quando selecionar 'Outros'.")
+    #if area_sel == "— Selecione —":
+    #    erros.append("• Selecione a **Área de atuação**.")
+    #if area_sel == "Outros" and not area_outros.strip():
+    #    erros.append("• Especifique a **Área de atuação** quando selecionar 'Outros'.")
 
 
     if erros:
