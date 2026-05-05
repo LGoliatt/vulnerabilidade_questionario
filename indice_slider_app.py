@@ -287,16 +287,16 @@ st.subheader("2. Informações Pessoais e Profissionais")
 # Idade
 idade_sel = st.selectbox("Idade *", idade_opts, index=0, help="Campo obrigatório.")
 
-idade = st.radio(
-    "Idade",
-    (
-        "De 18 a 24 anos",
-        "De 25 a 44 anos",
-        "De 45 a 64 anos",
-        "De 65 a 74 anos",
-        "Mais de 74 anos"
-    )
-)
+#idade = st.radio(
+#    "Idade",
+#    (
+#        "De 18 a 24 anos",
+#        "De 25 a 44 anos",
+#        "De 45 a 64 anos",
+#        "De 65 a 74 anos",
+#        "Mais de 74 anos"
+#    )
+#)
 
 # Especialista
 especialista = st.radio(
