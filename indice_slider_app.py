@@ -360,25 +360,31 @@ st.markdown("**Para nos ajudar a segmentar os dados, por favor responda às segu
 
 st.header("📝 Contexto da Pesquisa")
  
-st.markdown(
-'''
-O presente estudo utiliza a metodologia **Fuzzy AHP** para desenvolver um **índice 
-de vulnerabilidade hídrica natural em bacias hidrográficas**. 
-A técnica permite hierarquizar e ponderar critérios com maior precisão, 
-considerando incertezas inerentes ao processo decisório. 
-Os **pesos obtidos** são aplicados em geoprocessamento, 
-viabilizando análises espaciais mais robustas e apoiando a gestão ambiental integrada.
-'''
-)
-st.markdown(
-'''
-Nesse contexto, foram elencados cinco fatores, a saber: 
-**precipitação, elevação, declividade, uso e cobertura do solo e textura do solo**, 
-que serão submetidos à especialistas para realização de comparações
- pareadas através de uma escala de importância.
-'''
-)
+#st.markdown(
+#'''
+#O presente estudo utiliza a metodologia **Fuzzy AHP** para desenvolver um **índice 
+#de vulnerabilidade hídrica natural em bacias hidrográficas**. 
+#A técnica permite hierarquizar e ponderar critérios com maior precisão, 
+#considerando incertezas inerentes ao processo decisório. 
+#Os **pesos obtidos** são aplicados em geoprocessamento, 
+#viabilizando análises espaciais mais robustas e apoiando a gestão ambiental integrada.
+#'''
+#)
+#st.markdown(
+#'''
+#Nesse contexto, foram elencados cinco fatores, a saber: 
+#**precipitação, elevação, declividade, uso e cobertura do solo e textura do solo**, 
+#que serão submetidos à especialistas para realização de comparações
+# pareadas através de uma escala de importância.
+#'''
+#)
 
+st.markdown(
+'''
+Objetivo do formulário: Avaliar, a partir de julgamento técnico especializado, os fatores internos de gestão hídrica de empreendimentos industriais, subsidiando a composição do Índice de Segurança Hídrica Industrial (ISHI), na dimensão: Gestão Interna.
+'''
+)
+    
 st.image('5_fatores.png')
 # st.image('to_be_inserted.png')
 
