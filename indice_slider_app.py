@@ -232,13 +232,87 @@ def plot_fuzzy_membership(fuzzy_scale, x_range=(0, 10), title="Fuzzy Membership 
 #st.markdown("Compare e avalie pesos de critérios com métodos clássico (AHP) e fuzzy (FAHP).")
 
 
-st.set_page_config(page_title="FATORES INTERNOS DE GESTÃO HÍDRICA INDUSTRIAL", layout="centered")
-st.title("📊 FATORES INTERNOS DE GESTÃO HÍDRICA INDUSTRIAL")
+st.set_page_config(page_title="Fatores Internos de Gestão Hídrica Industrial", layout="centered")
+st.title("📊 Fatores Internos de Gestão Hídrica Industrial")
 
 
 
 st.header("📝 Perfil do Respondente")
 
+
+st.write("Por favor, preencha as informações abaixo para o perfil do respondente.")
+
+# Formulário para coleta de dados
+with st.form(key="perfil_form"):
+    
+    st.subheader("1. Identificação")
+    nome = st.text_input("Nome Completo")
+    email = st.text_input("E-mail para contato")
+    instituicao = st.text_input("Instituição/Empresa")
+    cargo = st.text_input("Cargo/Função")
+    
+    st.subheader("2. Informações Pessoais e Profissionais")
+    
+    # Idade
+    idade = st.radio(
+        "Idade",
+        (
+            "De 18 a 24 anos",
+            "De 25 a 44 anos",
+            "De 45 a 64 anos",
+            "De 65 a 74 anos",
+            "Mais de 74 anos"
+        )
+    )
+    
+    # Especialista
+    especialista = st.radio(
+        "Você se considera especialista na área de Recursos Hídricos?",
+        ("Sim", "Não", "Talvez")
+    )
+    
+    # Tempo de experiência
+    experiencia = st.selectbox(
+        "Tempo de experiência na Indústria?",
+        (
+            "< 1 ano",
+            "1–2 anos",
+            "2-5 anos",
+            "5-10 anos",
+            "Mais de 10 anos",
+            "Não tenho experiência na área"
+        )
+    )
+    
+    # Botão de envio
+    submit_button = st.form_submit_button(label="Enviar Resposta")
+
+# Ação após o envio
+if submit_button:
+    if not nome or not email:
+        st.error("Por favor, preencha pelo menos o seu nome e e-mail para prosseguir.")
+    else:
+        dados_respondente = {
+            "Nome": nome,
+            "Email": email,
+            "Instituição/Empresa": instituicao,
+            "Cargo/Função": cargo,
+            "Idade": idade,
+            "Especialista": especialista,
+            "Experiência": experiencia
+        }
+        
+        st.success("Dados coletados com sucesso!")
+        
+        # Exibe os dados inseridos para conferência
+        st.json(dados_respondente)
+        
+        # Aqui você pode adicionar lógica para salvar em um banco de dados, Google Sheets ou arquivo CSV.
+        # Exemplo: st.session_state['dados'] = dados_respondente
+        
+        
+        
+        
 # Opções solicitadas
 comite_opts =[
     "— Selecione —",
