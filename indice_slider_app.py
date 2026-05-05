@@ -423,8 +423,8 @@ st.info("""
 
 A comparação é baseada na sua percepção de importância entre dois fatores. Quando você compara o **Fator 1** em relação ao **Fator 2**, a escala indica a intensidade dessa relação:
 
-* **Valor 1:** O Fator 1 tem **Importância absoluta / Extrema importância** em relação ao Fator 2 (e o Fator 2 possui insignificância absoluta em relação ao Fator 1).
-* **Valor 9:** O Fator 2 tem **Importância absoluta / Extrema importância** em relação ao Fator 1 (e o Fator 1 é insignificante em relação ao Fator 2).
+* **Valor  9  :** O Fator 1 tem **Importância absoluta / Extrema importância** em relação ao Fator 2 (e o Fator 2 possui insignificância absoluta em relação ao Fator 1).
+* **Valor 1/9 :** O Fator 2 tem **Importância absoluta / Extrema importância** em relação ao Fator 1 (e o Fator 1 é insignificante em relação ao Fator 2).
 * **Valores intermediários (2 a 8):** Representam importâncias graduais entre esses dois extremos, permitindo nuances na sua avaliação.
 """)
 
