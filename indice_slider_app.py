@@ -44,7 +44,7 @@ def enviar_email_anexo(resposta,fname):
     app_password = "fucmefnbedfcftbu"  # 🔐 Senha de app
 
     recipient_email = "goliatt@gmail.com"
-    subject = "[ArcelorMittal] [Vulnerabilidade] Nova resposta no questionário FAHP - " + fname
+    subject = "📋[ArcelorMittal] [Gestão Hídrica Industrial] Nova resposta no questionário FAHP - " + fname
 
     # Cria a mensagem
     msg = MIMEMultipart()
@@ -704,7 +704,7 @@ if submitted:
         )
         
         #enviar_email(resposta, fname)     
-        fname = f"resposta_{now_local.strftime('%Y%m%d-%H%M%S')}_{uid}.json"
+        fname = f"resposta_gestao_hidrica_{now_local.strftime('%Y%m%d-%H%M%S')}_{uid}.json"
         enviar_email_anexo(resposta, fname)     
             
              
