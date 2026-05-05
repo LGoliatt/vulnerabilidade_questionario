@@ -392,7 +392,12 @@ st.image('form_questionario.png')
 # Critérios
 criterios = ["Knowledge", "Communication", "Experience"]
 criterios = ['Precipitação','Elevação','Declividade','Uso e cobertura do solo','Textura do solo',]
-# criterios = ["A1", "A2", "A3", "A4"]
+criterios = [
+    "Índice de Eficiência e Consumo Específico",
+    "Índice de Reúso e Recirculação",
+    "Índice de Resiliência Hídrica",
+    "Índice de Uso da Disponibilidade Hídrica"
+    ]
 
 n = len(criterios)
 
