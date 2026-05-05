@@ -385,8 +385,8 @@ Objetivo do formulário: Avaliar, a partir de julgamento técnico especializado,
 '''
 )
     
-st.image('5_fatores.png')
-# st.image('to_be_inserted.png')
+#st.image('5_fatores.png')
+st.image('form_questionario.png')
 
 
 # Critérios
