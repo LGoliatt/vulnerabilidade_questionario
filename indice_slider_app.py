@@ -268,7 +268,7 @@ with st.form(key="perfil_form"):
     # Especialista
     especialista = st.radio(
         "Você se considera especialista na área de Recursos Hídricos?",
-        ("Sim", "Não", "Talvez")
+        ("Sim", "Não", "Não sei dizer")
     )
     
     # Tempo de experiência
@@ -284,31 +284,31 @@ with st.form(key="perfil_form"):
         )
     )
     
-    # Botão de envio
-    submit_button = st.form_submit_button(label="Enviar Resposta")
+    ## Botão de envio
+    #submit_button = st.form_submit_button(label="Enviar Resposta")
 
-# Ação após o envio
-if submit_button:
-    if not nome or not email:
-        st.error("Por favor, preencha pelo menos o seu nome e e-mail para prosseguir.")
-    else:
-        dados_respondente = {
-            "Nome": nome,
-            "Email": email,
-            "Instituição/Empresa": instituicao,
-            "Cargo/Função": cargo,
-            "Idade": idade,
-            "Especialista": especialista,
-            "Experiência": experiencia
-        }
-        
-        st.success("Dados coletados com sucesso!")
-        
-        # Exibe os dados inseridos para conferência
-        st.json(dados_respondente)
-        
-        # Aqui você pode adicionar lógica para salvar em um banco de dados, Google Sheets ou arquivo CSV.
-        # Exemplo: st.session_state['dados'] = dados_respondente
+## Ação após o envio
+#if submit_button:
+#    if not nome or not email:
+#        st.error("Por favor, preencha pelo menos o seu nome e e-mail para prosseguir.")
+#    else:
+#        dados_respondente = {
+#            "Nome": nome,
+#            "Email": email,
+#            "Instituição/Empresa": instituicao,
+#            "Cargo/Função": cargo,
+#            "Idade": idade,
+#            "Especialista": especialista,
+#            "Experiência": experiencia
+#        }
+#        
+#        st.success("Dados coletados com sucesso!")
+#        
+#        # Exibe os dados inseridos para conferência
+#        st.json(dados_respondente)
+#        
+#        # Aqui você pode adicionar lógica para salvar em um banco de dados, Google Sheets ou arquivo CSV.
+#        # Exemplo: st.session_state['dados'] = dados_respondente
         
         
         
